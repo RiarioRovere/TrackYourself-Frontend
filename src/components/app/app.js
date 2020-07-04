@@ -4,18 +4,17 @@ import './app.css';
 import WithApiService from "../hoc/with-api-service";
 import SignalPage from "../pages/signal-page";
 import AnalysesPage from "../pages/analyses-page";
-import LoginPage from "../pages/LoginPage";
+import LoginPage from "../pages/login-page";
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: false
+            isLoggedIn: true
         }
     }
     componentDidMount() {
         // this.props.apiService.isLoggedIn().then(r => this.setState({isLoggedIn: r}))
-        this.props.apiService.isLoggedIn().then(r => this.setState({isLoggedIn: r}))
     }
 
     render() {
