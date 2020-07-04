@@ -15,10 +15,12 @@ class ApiService {
     }
 
     isLoggedIn = () => {
-        return fetch(`${this.apiUrl}/is_logged_in`, { credentials: 'include' })
+        return fetch('http://localhost:8080/is_logged_in', { credentials: 'include' })
         .then((r) => {
+            console.log(r)
             return r.status === 200;
         })
+        .catch(error => console.log(error))
     }
 }
 

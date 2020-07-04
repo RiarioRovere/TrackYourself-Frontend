@@ -4,6 +4,7 @@ import './app.css';
 import WithApiService from "../hoc/with-api-service";
 import SignalPage from "../pages/signal-page";
 import AnalysesPage from "../pages/analyses-page";
+import LoginPage from "../pages/LoginPage";
 
 class App extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class App extends Component {
         }
     }
     componentDidMount() {
+        // this.props.apiService.isLoggedIn().then(r => this.setState({isLoggedIn: r}))
         this.props.apiService.isLoggedIn().then(r => this.setState({isLoggedIn: r}))
     }
 
@@ -20,7 +22,9 @@ class App extends Component {
         return (
             <Router>
                 <Switch>
-                    {}
+                    {this.state.isLoggedIn !== true &&
+                        <Route path="/"> <LoginPage/> </Route>
+                    }
                     <Route path="/analyses">
                         <AnalysesPage />
                     </Route>
