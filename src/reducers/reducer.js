@@ -1,9 +1,22 @@
-const reducer = () => (state, action) => {
-    if (action === null) {
-        return state;
+const initState =
+    {
+        name: 'sleep',
+        value: 3.
     }
-    const {type} = action;
-    switch (type) {
+;
+
+const reducer = (state = initState, action) => {
+    switch (action.type) {
+        case 'INC':
+            return {
+                ...state,
+                value: state.value + 1
+            }
+        case 'DEC':
+            return {
+                ...state,
+                value: state.value - 1
+            }
         default:
             return state;
     }
