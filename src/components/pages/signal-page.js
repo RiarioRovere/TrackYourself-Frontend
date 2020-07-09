@@ -11,7 +11,6 @@ class SignalPage extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state)
     }
 
     handleOnChange = (e) => {
@@ -19,7 +18,6 @@ class SignalPage extends Component {
         this.setState({
             [name]: value
         })
-        console.log(this.state)
     }
 
     render() {
@@ -28,7 +26,6 @@ class SignalPage extends Component {
                 <label>
                     <input name={name}
                            type={'number'}
-                           // value={''}
                            onChange={this.handleOnChange}
                     />
                     {name}
