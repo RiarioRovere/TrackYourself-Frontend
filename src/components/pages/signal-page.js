@@ -2,21 +2,33 @@ import React, {Component} from "react";
 import WithApiService from "../hoc/with-api-service";
 
 class SignalPage extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     // this.state = {
-    //     //
-    //     // }
-    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            signals: {
+
+            }
+        }
+    }
 
     handleSubmit = (e) => {
         e.preventDefault();
         let toSave = []
-        Object.entries(this.state).forEach(([key, value]) => toSave.push({
+        Object.entries(this.state.signals).forEach(([key, value]) => toSave.push({
             name: key,
-            value: value
+            value: value,
+            date: this.state.date || new Date().toISOString().substring(0, 10)
         }))
         this.props.apiService.saveSignals(toSave)
+    }
+
+    handleOnChangeSignal = (e) => {
+        const {name, value} = e.target
+        this.setState({
+            signals: {
+                [name]: value
+            }
+        })
     }
 
     handleOnChange = (e) => {
@@ -24,6 +36,7 @@ class SignalPage extends Component {
         this.setState({
             [name]: value
         })
+        console.log(this.state)
     }
 
     render() {
@@ -32,7 +45,7 @@ class SignalPage extends Component {
                 <label>
                     <input name={name}
                            type={'number'}
-                           onChange={this.handleOnChange}
+                           onChange={this.handleOnChangeSignal}
                     />
                     {name}
                 </label>
@@ -41,6 +54,14 @@ class SignalPage extends Component {
 
         return (
             <form onSubmit={this.handleSubmit}>
+                <label>
+                    <input name={'date'}
+                           type={'date'}
+                           onChange={this.handleOnChange}
+                    />
+                    date
+                </label>
+
                 <ul>{listItems}</ul>
                 <input type="submit" value="Отправить" />
             </form>
