@@ -24,11 +24,12 @@ class SignalPage extends Component {
 
     handleOnChangeSignal = (e) => {
         const {name, value} = e.target
-        this.setState({
+        this.setState( (prevState) => ({
             signals: {
+                ...prevState.signals,
                 [name]: value
             }
-        })
+        }))
     }
 
     handleOnChange = (e) => {
