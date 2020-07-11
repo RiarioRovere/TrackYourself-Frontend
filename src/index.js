@@ -21,7 +21,7 @@ ReactDOM.render(
                     <App/>
                 </ErrorBoundry>
             </ApiServiceProvider>
-        </Provider>,
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 );

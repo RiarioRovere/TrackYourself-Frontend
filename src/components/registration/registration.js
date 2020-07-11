@@ -1,15 +1,17 @@
 import React, {Component} from "react";
 import WithApiService from "../hoc/with-api-service";
 
-class LoginForm extends Component {
+class Registration extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state)
 
-        fetch(`${this.props.apiService.apiUrl}/login`, {
-            method: 'GET',
-            headers: {'Authorization': 'Basic ' + btoa(this.state.username + ":" + this.state.password) },
-            credentials: "include"
+        fetch(`${this.props.apiService.apiUrl}/user/register`, {
+            method: 'POST',
+            body: JSON.stringify(this.state),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
         .then(v => {
             console.log(v)
@@ -49,4 +51,4 @@ class LoginForm extends Component {
     }
 }
 
-export default WithApiService(LoginForm);
+export default WithApiService(Registration);

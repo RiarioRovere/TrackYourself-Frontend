@@ -1,17 +1,30 @@
 import {createRenderer} from "react-dom/test-utils";
+import {map} from "react-bootstrap/cjs/ElementChildren";
 
 class ApiService {
     constructor() {
-        this.apiUrl = 'http://api.trackyourself.io'
+        this.apiUrl = 'https://api.trackyourself.io'
+        // this.apiUrl = 'http://localhost:8080'
+    }
+
+    saveSignals = (signals) => {
+        return fetch(`${this.apiUrl}/signals`, {
+            method: 'POST',
+            credentials: "include",
+            body: JSON.stringify(signals),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
     }
 
     getSignals = () => {
-        return [
-            {
-                name: 'sleep',
-                value: 3.
-            }
-        ]
+        return fetch(`${this.apiUrl}/signals`, { credentials: 'include' })
+        .then((r) => {
+            const js = r.json()
+            return js;
+        })
+        .catch(error => console.log(error))
     }
 
     getSignalNames = () => {
@@ -25,12 +38,17 @@ class ApiService {
     }
 
     isLoggedIn = () => {
-        return true;
-        // return fetch(`${this.apiUrl}/is_logged_in`, { credentials: 'include' })
-        // .then((r) => {
-        //     return r.status === 200;
-        // })
-        // .catch(error => console.log(error))
+        // return true;
+        return fetch(`${this.apiUrl}/login`, {
+            credentials: 'include',
+            // headers: {
+            //     'X-Requested-With': 'XMLHttpRequest'
+            // }
+        })
+        .then((r) => {
+            return r.status !== 401;
+        })
+        .catch(error => console.log(error))
     }
 }
 

@@ -11,6 +11,12 @@ class SignalPage extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        let toSave = []
+        Object.entries(this.state).forEach(([key, value]) => toSave.push({
+            name: key,
+            value: value
+        }))
+        this.props.apiService.saveSignals(toSave)
     }
 
     handleOnChange = (e) => {

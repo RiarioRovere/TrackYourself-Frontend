@@ -2,11 +2,30 @@ import React, {Component} from "react";
 import WithApiService from "../hoc/with-api-service";
 
 class AnalysesPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            signals: null
+        }
+    }
+
+    componentDidMount() {
+        this.props.apiService.getSignals().then((signals) => {
+                const v = signals.map(({name, value}) => {
+                    return {name, value}
+                });
+                this.setState({
+                    signals: v
+                })
+            }
+        )
+    }
+
     render() {
+
         return (
             <div>
-                Analyses Page
-                {JSON.stringify(this.props.apiService.getSignals())}
+                {JSON.stringify(this.state)}
             </div>
         )
     }
