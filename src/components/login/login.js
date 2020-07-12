@@ -16,6 +16,7 @@ class LoginForm extends Component {
         .then(data => data.json())
         .then(v => {
             localStorage.setItem('token', v.token)
+            window.location.reload(false);
         })
         .catch(e => console.warn(e))
     }

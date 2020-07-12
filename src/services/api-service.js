@@ -4,7 +4,7 @@ import {map} from "react-bootstrap/cjs/ElementChildren";
 class ApiService {
     constructor() {
         this.apiUrl = 'https://api.trackyourself.io'
-        // this.apiUrl = 'http://localhost:8080';
+        // this.apiUrl = 'http://localhost:8081';
         this.token = localStorage.getItem('token')
     }
 
@@ -45,8 +45,8 @@ class ApiService {
 
     isLoggedIn = () => {
         // return true;
-        return fetch(`${this.apiUrl}/login`, {
-            method: 'POST',
+        return fetch(`${this.apiUrl}/signals`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.token}`

@@ -19,10 +19,20 @@ class App extends Component {
         this.props.apiService.isLoggedIn().then(r => this.setState({isLoggedIn: r}));
     }
 
+    handleClick = event => {
+        event.preventDefault()
+        localStorage.removeItem("token")
+        window.location.reload(false);
+    }
+
     render() {
         return (
             <Router>
                 <nav>
+                    {this.state.isLoggedIn === true
+                        ? <button onClick={this.handleClick}>Log Out</button>
+                        : null
+                    }
                     <ul>
                         <li>
                             <Link to="/signal">Track it!</Link>
@@ -36,6 +46,9 @@ class App extends Component {
                     </ul>
                 </nav>
                 <Switch>
+                    <Route path="/registration">
+                        <RegistrationPage />
+                    </Route>
                     {this.state.isLoggedIn !== true &&
                         <Route path="/"> <LoginPage/> </Route>
                     }
@@ -44,9 +57,6 @@ class App extends Component {
                     </Route>
                     <Route path="/signal">
                         <SignalPage />
-                    </Route>
-                    <Route path="/registration">
-                        <RegistrationPage />
                     </Route>
                     <Route path="/">
                         <HomePage />
