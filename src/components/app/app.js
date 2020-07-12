@@ -40,9 +40,12 @@ class App extends Component {
                         <li>
                             <Link to="/analyze">Analyze</Link>
                         </li>
-                        <li>
-                            <Link to="/registration">Register</Link>
-                        </li>
+                        {this.state.isLoggedIn === false
+                            ? <li>
+                                <Link to="/registration">Register</Link>
+                            </li>
+                            : null
+                        }
                     </ul>
                 </nav>
                 <Switch>
