@@ -6,14 +6,16 @@ class LoginForm extends Component {
         e.preventDefault();
         console.log(this.state)
 
-        fetch(`${this.props.apiService.apiUrl}/login`, {
-            method: 'GET',
-            headers: {'Authorization': 'Basic ' + btoa(this.state.username + ":" + this.state.password) },
-            credentials: "include"
+        fetch(`${this.props.apiService.apiUrl}/user/authenticate`, {
+            method: 'POST',
+            body: JSON.stringify(this.state),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
+        .then(data => data.json())
         .then(v => {
-            console.log(v)
-            // if(v.redirected) window.location = v.url
+            localStorage.setItem('token', v.token)
         })
         .catch(e => console.warn(e))
     }
@@ -29,20 +31,16 @@ class LoginForm extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <label>
-                    <input name={'username'}
-                           type={'text'}
-                           onChange={this.handleOnChange}
-                    />
-                    <span>username</span>
-                </label>
-                <label>
-                    <input name={'password'}
-                           type={'password'}
-                           onChange={this.handleOnChange}
-                    />
-                    <span>password</span>
-                </label>
+                <label>username</label>
+                <input name={'username'}
+                       type={'text'}
+                       onChange={this.handleOnChange}
+                />
+                <label>password</label>
+                <input name={'password'}
+                       type={'password'}
+                       onChange={this.handleOnChange}
+                />
                 <input type="submit" value="Отправить" />
             </form>
         )

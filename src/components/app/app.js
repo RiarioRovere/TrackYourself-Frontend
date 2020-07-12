@@ -20,15 +20,8 @@ class App extends Component {
     }
 
     render() {
-        // const redirect = this.state.isLoggedIn !== true && <Redirect to="/login" />;
         return (
             <Router>
-                {/*{*/}
-                {/*    redirect*/}
-                {/*}*/}
-                {/*{*/}
-                {/*    JSON.stringify(this.state)*/}
-                {/*}*/}
                 <nav>
                     <ul>
                         <li>
@@ -43,10 +36,9 @@ class App extends Component {
                     </ul>
                 </nav>
                 <Switch>
-                    {/*{this.state.isLoggedIn !== true &&*/}
-                    {/*    <Route path="/"> <LoginPage/> </Route>*/}
-                    {/*}*/}
-                    {/*<Route path="/login"> <LoginPage/> </Route>*/}
+                    {this.state.isLoggedIn !== true &&
+                        <Route path="/"> <LoginPage/> </Route>
+                    }
                     <Route path="/analyze">
                         <AnalysesPage />
                     </Route>
