@@ -10,6 +10,13 @@ class AnalyzePage extends Component {
         this.state = {
             signals: []
         }
+        this.colors = {
+            sleep: "#8884d8",
+            sport: "#a02c8c",
+            nutrition: "#c10e0e",
+            meditation: "#bd933b",
+            "life qualiity": "#8cce41"
+        };
     }
 
     componentDidMount() {
@@ -67,7 +74,7 @@ class AnalyzePage extends Component {
                     {
                         signalNames.map((name) => {
                             console.log(name)
-                            return <Line type="monotone" dataKey={name} stroke="#8884d8" activeDot={{ r: 8 }} />
+                            return <Line type="monotone" dataKey={name} stroke={this.colors[name]} activeDot={{ r: 8 }} />
                         })
                     }
 
