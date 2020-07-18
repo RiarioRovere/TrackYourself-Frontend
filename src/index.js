@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore} from 'redux'
+import {applyMiddleware, createStore} from 'redux'
 import {Provider} from 'react-redux'
 // import {Router} from 'react-router-dom'
 import reducer from "./reducers/reducer";
@@ -9,8 +9,9 @@ import './index.css';
 import ErrorBoundry from "./components/error-boundry/error-boundry";
 import {ApiServiceProvider} from './components/api-service-context/api-service-context'
 import ApiService from "./services/api-service";
+import thunk from 'redux-thunk';
 
-const store = createStore(reducer)
+const store = createStore(reducer, applyMiddleware(thunk))
 const apiService = new ApiService();
 
 ReactDOM.render(

@@ -64,29 +64,20 @@ class AnalyzePage extends Component {
                     data={toDraw}
                     margin={{
                         top: 5, right: 30, left: 20, bottom: 60,
-                    }}
-                >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" angle={'-45'} textAnchor="end" />
-                    <YAxis />
-                    <Tooltip />
+                    }}>
+                    <CartesianGrid strokeDasharray="3 3"/>
+                    <XAxis dataKey="date" angle={'-45'} textAnchor="end"/>
+                    <YAxis/>
+                    <Tooltip/>
                     <Legend verticalAlign={'top'}/>
                     {
                         signalNames.map((name) => {
                             console.log(name)
-                            return <Line type="monotone" dataKey={name} stroke={this.colors[name]} activeDot={{ r: 8 }} />
+                            return <Line type="monotone" dataKey={name} stroke={this.colors[name]} activeDot={{r: 8}}/>
                         })
                     }
 
-                    {/*<Line type="monotone" dataKey="sleep" stroke="#82ca9d" />*/}
-                    {/*<Line type="monotone" dataKey="nutrition" stroke="#82ca9d" />*/}
                 </LineChart>
-                {/*{JSON.stringify(this.state)}*/}
-                {/*{JSON.stringify(data)}*/}
-                {/*<div>*/}
-                {/*    {JSON.stringify(toDraw)}*/}
-                {/*    {JSON.stringify(signalNames)}*/}
-                {/*</div>*/}
             </div>
         )
     }

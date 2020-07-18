@@ -1,25 +1,15 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 import WithApiService from "../hoc/with-api-service";
+import * as actions from "../../actions";
+import mapDispatchToProps from "react-redux/lib/connect/mapDispatchToProps";
 
 class LoginForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state)
-
-        fetch(`${this.props.apiService.apiUrl}/user/authenticate`, {
-            method: 'POST',
-            body: JSON.stringify(this.state),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(data => data.json())
-        .then(v => {
-            localStorage.setItem('token', v.token)
-            window.location.reload(false);
-        })
-        .catch(e => console.warn(e))
+        this.props.fetchAccessToken(this.props.apiService, this.state.username, this.state.password)
     }
+
 
     handleOnChange = (e) => {
         const {name, value} = e.target
@@ -48,4 +38,4 @@ class LoginForm extends Component {
     }
 }
 
-export default WithApiService(LoginForm);
+export default connect(null, actions)(WithApiService(LoginForm));
