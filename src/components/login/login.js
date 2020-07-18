@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import WithApiService from "../hoc/with-api-service";
 import * as actions from "../../actions";
+import {Button, FormControl, InputLabel, Input, FormGroup, Grid} from '@material-ui/core';
+
 
 class LoginForm extends Component {
     handleSubmit = (e) => {
@@ -19,19 +21,29 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>username</label>
-                <input name={'username'}
-                       type={'text'}
-                       onChange={this.handleOnChange}
-                />
-                <label>password</label>
-                <input name={'password'}
-                       type={'password'}
-                       onChange={this.handleOnChange}
-                />
-                <input type="submit" value="Отправить" />
-            </form>
+            <Grid container justify="center">
+                <Grid item xs={5} lg={2}>
+                    <FormGroup>
+                        <FormControl>
+                            <InputLabel htmlFor="login">username</InputLabel>
+                            <Input id='login'
+                                   name={'username'}
+                                   type={'text'}
+                                   onChange={this.handleOnChange}
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel htmlFor="password">password</InputLabel>
+                            <Input id="password"
+                                   name={'password'}
+                                   type={'password'}
+                                   onChange={this.handleOnChange}
+                            />
+                        </FormControl>
+                        <Button color="primary" onClick={this.handleSubmit}>Log in</Button>
+                    </FormGroup>
+                </Grid>
+            </Grid>
         )
     }
 }

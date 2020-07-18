@@ -7,52 +7,24 @@ import AnalysesPage from "../pages/analyses-page";
 import LoginPage from "../pages/login-page";
 import HomePage from "../pages/home-page";
 import RegistrationPage from "../pages/registration-page";
+import NavigationBar from "../navigation-bar/navigation-bar";
+import * as actions from "../../actions";
+import {connect} from "react-redux";
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoggedIn: false
-        }
-    }
     componentDidMount() {
-        this.props.apiService.isLoggedIn().then(r => this.setState({isLoggedIn: r}));
-    }
-
-    handleClick = event => {
-        event.preventDefault()
-        localStorage.removeItem("token")
-        window.location.reload(false);
+        this.props.fecthLoginState(this.props.apiService);
     }
 
     render() {
         return (
             <Router>
-                <nav>
-                    {this.state.isLoggedIn === true
-                        ? <button onClick={this.handleClick}>Log Out</button>
-                        : null
-                    }
-                    <ul>
-                        <li key={'1'}>
-                            <Link to="/signal">Track it!</Link>
-                        </li>
-                        <li key={'2'}>
-                            <Link to="/analyze">Analyze</Link>
-                        </li>
-                        {this.state.isLoggedIn === false
-                            ? <li key={'3'}>
-                                <Link to="/registration">Register</Link>
-                            </li>
-                            : null
-                        }
-                    </ul>
-                </nav>
+                <NavigationBar />
                 <Switch>
                     <Route path="/registration">
                         <RegistrationPage />
                     </Route>
-                    {this.state.isLoggedIn !== true &&
+                    {this.props.isLoggedIn !== true &&
                         <Route path="/"> <LoginPage/> </Route>
                     }
                     <Route path="/analyze">
@@ -70,4 +42,8 @@ class App extends Component {
     }
 }
 
-export default WithApiService(App);
+const mapStateToProps = ({isLoggedIn}) => {
+    return {isLoggedIn}
+}
+
+export default connect(mapStateToProps, actions)(WithApiService(App));

@@ -33,5 +33,25 @@ const fetchSignals = (apiService) => {
     }
 }
 
+const fecthLoginState = (apiService) => {
+    return function(dispatch) {
+        apiService.isLoggedIn().then(isLoggedIn => {
+                dispatch({
+                    type: 'LOGIN_STATE_FETCHED',
+                    value: isLoggedIn
+                })
+            }
+        )
+    }
+}
 
-export {fetchAccessToken, fetchSignals}
+const logout = () => {
+    localStorage.removeItem("token")
+    window.location.href = "/"
+    return {
+        type: 'LOGOUT',
+    }
+}
+
+
+export {fetchAccessToken, fetchSignals, fecthLoginState, logout}

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import WithApiService from "../hoc/with-api-service";
+import {Button, FormControl, FormGroup, Grid, Input, InputLabel, TextField} from "@material-ui/core";
 
 class TrackForm extends Component {
     constructor(props) {
@@ -41,37 +42,38 @@ class TrackForm extends Component {
     render() {
         const listItems = this.props.apiService.getSignalNames().map((name) => {
             return (
-                <div className="form-group">
-                    <label htmlFor={name}>{`${name}:`}</label>
-                    <input name={name}
+                <FormControl>
+                    <InputLabel htmlFor={name}>{`${name}:`}</InputLabel>
+                    <Input id={name}
+                           name={name}
                            type={'number'}
-                           className={'form-control'}
                            onChange={this.handleOnChangeSignal}
                     />
-                </div>
+                </FormControl>
             )
         })
 
         return (
-            <div className={'container'}>
-                <div className={'row'}>
-                    <div className={'col-6'}>
-                        <a>{this.props.token}</a>
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="form-group">
-                                <label htmlFor='date'>{'date:'}</label>
-                                <input name={'date'}
-                                       type={'date'}
-                                       className={'form-group'}
-                                       onChange={this.handleOnChange}
-                                />
-                            </div>
-                            {listItems}
-                            <input type="submit" className={"btn btn-primary"} value="Отправить"/>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <Grid container justify="center">
+                <Grid item xs={5} lg={2}>
+                    <FormGroup>
+                        <FormControl>
+                            <TextField
+                                id="date"
+                                label="date"
+                                type="date"
+                                name="date"
+                                onChange={this.handleOnChange}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </FormControl>
+                        {listItems}
+                        <Button color="primary" onClick={this.handleSubmit}>submit</Button>
+                    </FormGroup>
+                </Grid>
+            </Grid>
         )
     }
 }

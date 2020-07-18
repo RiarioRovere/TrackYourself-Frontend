@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import WithApiService from "../hoc/with-api-service";
+import {Button, FormControl, FormGroup, Input, InputLabel, Grid} from "@material-ui/core";
 
 class Registration extends Component {
     handleSubmit = (e) => {
@@ -24,23 +25,29 @@ class Registration extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    <input name={'username'}
-                           type={'text'}
-                           onChange={this.handleOnChange}
-                    />
-                    <span>username</span>
-                </label>
-                <label>
-                    <input name={'password'}
-                           type={'password'}
-                           onChange={this.handleOnChange}
-                    />
-                    <span>password</span>
-                </label>
-                <input type="submit" value="Отправить" />
-            </form>
+            <Grid container justify="center">
+                <Grid item xs={5} lg={2}>
+                    <FormGroup>
+                        <FormControl>
+                            <InputLabel htmlFor="login">username</InputLabel>
+                            <Input id='login'
+                                   name={'username'}
+                                   type={'text'}
+                                   onChange={this.handleOnChange}
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel htmlFor="password">password</InputLabel>
+                            <Input id="password"
+                                   name={'password'}
+                                   type={'password'}
+                                   onChange={this.handleOnChange}
+                            />
+                        </FormControl>
+                        <Button color="primary" onClick={this.handleSubmit}>Sign Up</Button>
+                    </FormGroup>
+                </Grid>
+            </Grid>
         )
     }
 }
