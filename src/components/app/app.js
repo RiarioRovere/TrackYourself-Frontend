@@ -34,14 +34,14 @@ class App extends Component {
                         : null
                     }
                     <ul>
-                        <li>
+                        <li key={'1'}>
                             <Link to="/signal">Track it!</Link>
                         </li>
-                        <li>
+                        <li key={'2'}>
                             <Link to="/analyze">Analyze</Link>
                         </li>
                         {this.state.isLoggedIn === false
-                            ? <li>
+                            ? <li key={'3'}>
                                 <Link to="/registration">Register</Link>
                             </li>
                             : null

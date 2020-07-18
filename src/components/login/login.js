@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import WithApiService from "../hoc/with-api-service";
 import * as actions from "../../actions";
-import mapDispatchToProps from "react-redux/lib/connect/mapDispatchToProps";
 
 class LoginForm extends Component {
     handleSubmit = (e) => {
@@ -16,7 +15,6 @@ class LoginForm extends Component {
         this.setState({
             [name]: value
         })
-        console.log(this.state)
     }
 
     render() {

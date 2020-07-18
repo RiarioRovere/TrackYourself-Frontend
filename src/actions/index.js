@@ -1,6 +1,5 @@
 const fetchAccessToken = (apiService, username, password) => {
     return function(dispatch) {
-        console.log('fetchAccessToken', username, password, apiService)
         const request = {username: username, password}
         fetch(`${apiService.apiUrl}/user/authenticate`, {
             method: 'POST',
@@ -22,4 +21,17 @@ const fetchAccessToken = (apiService, username, password) => {
     }
 }
 
-export {fetchAccessToken}
+const fetchSignals = (apiService) => {
+    return function(dispatch) {
+        apiService.getSignals().then((signals) => {
+                dispatch({
+                    type: 'SIGNALS_FETCHED',
+                    value: signals
+                })
+            }
+        )
+    }
+}
+
+
+export {fetchAccessToken, fetchSignals}

@@ -4,7 +4,6 @@ import WithApiService from "../hoc/with-api-service";
 class Registration extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state)
 
         fetch(`${this.props.apiService.apiUrl}/user/register`, {
             method: 'POST',
@@ -12,10 +11,6 @@ class Registration extends Component {
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-        .then(v => {
-            console.log(v)
-            // if(v.redirected) window.location = v.url
         })
         .catch(e => console.warn(e))
     }
@@ -25,7 +20,6 @@ class Registration extends Component {
         this.setState({
             [name]: value
         })
-        console.log(this.state)
     }
 
     render() {
