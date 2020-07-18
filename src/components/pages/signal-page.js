@@ -5,9 +5,7 @@ class SignalPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            signals: {
-
-            }
+            signals: {}
         }
     }
 
@@ -24,7 +22,7 @@ class SignalPage extends Component {
 
     handleOnChangeSignal = (e) => {
         const {name, value} = e.target
-        this.setState( (prevState) => ({
+        this.setState((prevState) => ({
             signals: {
                 ...prevState.signals,
                 [name]: value
@@ -42,30 +40,37 @@ class SignalPage extends Component {
 
     render() {
         const listItems = this.props.apiService.getSignalNames().map((name) => {
-            return <li>
-                <label>
+            return (
+                <div className="form-group">
+                    <label htmlFor={name}>{`${name}:`}</label>
                     <input name={name}
                            type={'number'}
+                           className={'form-control'}
                            onChange={this.handleOnChangeSignal}
                     />
-                    {name}
-                </label>
-            </li>
+                </div>
+            )
         })
 
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    <input name={'date'}
-                           type={'date'}
-                           onChange={this.handleOnChange}
-                    />
-                    date
-                </label>
-
-                <ul>{listItems}</ul>
-                <input type="submit" value="Отправить" />
-            </form>
+            <div className={'container'}>
+                <div className={'row'}>
+                    <div className={'col-6'}>
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="form-group">
+                                <label htmlFor='date'>{'date:'}</label>
+                                <input name={'date'}
+                                       type={'date'}
+                                       className={'form-group'}
+                                       onChange={this.handleOnChange}
+                                />
+                            </div>
+                            {listItems}
+                            <input type="submit" className={"btn btn-primary"} value="Отправить"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
         )
     }
 }
