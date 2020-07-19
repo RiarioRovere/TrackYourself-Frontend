@@ -57,6 +57,23 @@ class ApiService {
         })
         .catch(error => console.log(error))
     }
+
+    getInsight = (id) => {
+        switch (id) {
+            case 'sport':
+                return 'Do sport'
+            case 'sleep':
+                return 'Sleep well'
+            case 'water':
+                return 'Drink water'
+            case 'meditation':
+                return 'Keep calm'
+            case 'nutrition':
+                return 'Eat well'
+            default:
+                return 'Be happy'
+        }
+    }
 }
 
 
