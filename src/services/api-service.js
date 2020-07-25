@@ -1,6 +1,3 @@
-import {createRenderer} from "react-dom/test-utils";
-import {map} from "react-bootstrap/cjs/ElementChildren";
-
 class ApiService {
     constructor() {
         this.apiUrl = 'https://api.trackyourself.io'
@@ -27,8 +24,7 @@ class ApiService {
             }
         })
         .then((r) => {
-            const js = r.json()
-            return js;
+            return r.json();
         })
         .catch(error => console.log(error))
     }
@@ -58,7 +54,7 @@ class ApiService {
         .catch(error => console.log(error))
     }
 
-    getInsight = (id) => {
+    fetchInsight = (id) => {
         switch (id) {
             case 'sport':
                 return 'Do sport'

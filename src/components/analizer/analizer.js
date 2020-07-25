@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import WithApiService from "../hoc/with-api-service";
 import * as actions from "../../actions";
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
@@ -22,7 +21,7 @@ class Analyzer extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchSignals(this.props.apiService);
+        this.props.fetchSignals();
     }
 
     render() {
@@ -83,4 +82,4 @@ const mapStateToProps = ({signals}) => {
     return {signals: mappedSignals}
 }
 
-export default connect(mapStateToProps, actions)(WithApiService(Analyzer));
+export default connect(mapStateToProps, actions)(Analyzer);

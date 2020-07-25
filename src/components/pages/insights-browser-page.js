@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import WithApiService from "../hoc/with-api-service";
 import InsightsBrowser from "../insights/browser/insights-browser";
 
 class InsightsBrowserPage extends Component {
@@ -10,4 +9,4 @@ class InsightsBrowserPage extends Component {
     }
 }
 
-export default WithApiService(InsightsBrowserPage);
+export default InsightsBrowserPage;

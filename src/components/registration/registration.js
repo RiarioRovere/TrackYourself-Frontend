@@ -1,19 +1,12 @@
 import React, {Component} from "react";
-import WithApiService from "../hoc/with-api-service";
 import {Button, FormControl, FormGroup, Input, InputLabel, Grid} from "@material-ui/core";
+import {connect} from "react-redux";
+import * as actions from "../../actions";
 
 class Registration extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
-
-        fetch(`${this.props.apiService.apiUrl}/user/register`, {
-            method: 'POST',
-            body: JSON.stringify(this.state),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .catch(e => console.warn(e))
+        this.props.registerUser(this.state.username, this.state.password)
     }
 
     handleOnChange = (e) => {
@@ -52,4 +45,5 @@ class Registration extends Component {
     }
 }
 
-export default WithApiService(Registration);
+
+export default connect(null, actions)(Registration);

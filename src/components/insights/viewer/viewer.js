@@ -1,21 +1,11 @@
 import React, {Component} from 'react';
-import {withRouter} from "react-router";
-import WithApiService from "../../hoc/with-api-service";
+import {connect} from 'react-redux'
 import {Grid, Typography} from "@material-ui/core";
+import * as actions from "../../../actions";
 
 class Viewer extends Component {
-    constructor() {
-        super();
-        this.state = {
-            id: '',
-            content: ''
-        }
-    }
     componentDidMount() {
-        this.setState({
-            id: this.props.id,
-            content: this.props.apiService.getInsight(this.props.id)
-        })
+        this.props.fetchInsight(this.props.id);
     }
 
     render() {
@@ -23,8 +13,8 @@ class Viewer extends Component {
             <div>
                 <Grid container justify="flex-start">
                     <Grid item xs={12} lg={5}>
-                        <Typography variant="h2"> {this.state.id} </Typography>
-                        <Typography variant="body1"> {this.state.content} </Typography>
+                        <Typography variant="h2"> {this.props.id} </Typography>
+                        <Typography variant="body1"> {this.props.insight} </Typography>
                     </Grid>
                 </Grid>
             </div>
@@ -32,4 +22,8 @@ class Viewer extends Component {
     }
 }
 
-export default WithApiService(withRouter(Viewer));
+const mapStateToProps = ({insight}) => {
+    return {insight}
+}
+
+export default connect(mapStateToProps, actions)(Viewer);
