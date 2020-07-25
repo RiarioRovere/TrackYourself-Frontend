@@ -26,6 +26,10 @@ class NavigationBar extends Component {
                         insights
                     </Button>
                     {this.props.isLoggedIn === true
+                        ? < Button component={RouterLink} to="/profile">Profile</Button>
+                        : null
+                    }
+                    {this.props.isLoggedIn === true
                         ? <Button onClick={this.handleClick}>LogOut</Button>
                         : null
                     }

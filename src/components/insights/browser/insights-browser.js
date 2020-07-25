@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import WithApiService from "../../hoc/with-api-service";
 import {Button, Grid, Typography} from "@material-ui/core";
+import {connect} from "react-redux";
+import * as actions from "../../../actions";
 
 class InsightsBrowser extends Component {
+    componentDidMount() {
+        this.props.fetchSignalsNames();
+    }
+
     render() {
-        const listItems = this.props.apiService.getSignalNames().map(name => {
+        const listItems = this.props.signalNames.map(name => {
             return (
                 <Button  component={Link} to={`/insight/${name}`}>
                     {name}
@@ -25,4 +30,8 @@ class InsightsBrowser extends Component {
     }
 }
 
-export default WithApiService(InsightsBrowser);
+const mapStateToProps = ({signalNames}) => {
+    return {signalNames}
+}
+
+export default connect(mapStateToProps, actions)(InsightsBrowser);

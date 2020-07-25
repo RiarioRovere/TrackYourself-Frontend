@@ -1,6 +1,8 @@
 const initState = {
     signals: [],
-    isLoggedIn: false
+    signalNames: [],
+    isLoggedIn: false,
+    insight: ""
 };
 
 const reducer = (state = initState, action) => {
@@ -14,6 +16,17 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 signals: action.value
+            }
+        case "SIGNAL_NAMES_FETCHED":
+            console.log('SIGNAL_NAMES_FETCHED', action.value)
+            return {
+                ...state,
+                signalNames: action.value
+            }
+        case 'INSIGHT_FETCHED':
+            return {
+                ...state,
+                insight: action.value
             }
         default:
             return state;

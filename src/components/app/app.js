@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import './app.css';
-import WithApiService from "../hoc/with-api-service";
 import SignalPage from "../pages/signal-page";
 import AnalysesPage from "../pages/analyses-page";
 import LoginPage from "../pages/login-page";
@@ -12,10 +11,12 @@ import * as actions from "../../actions";
 import {connect} from "react-redux";
 import InsightPage from "../pages/insight-page";
 import InsightsBrowserPage from "../pages/insights-browser-page";
+import ProfilePage from "../pages/profile-page";
+import SignalEditor from "../profile/signal-editor";
 
 class App extends Component {
     componentDidMount() {
-        this.props.fecthLoginState(this.props.apiService);
+        this.props.fetchLoginState();
     }
 
     render() {
@@ -40,6 +41,8 @@ class App extends Component {
                     <Route exact path="/">
                         <HomePage />
                     </Route>
+                    <Route exact path="/profile" component={ProfilePage}/>
+                    <Route exact path="/profile/signals" component={SignalEditor}/>
                 </Switch>
             </Router>
         )
@@ -50,4 +53,4 @@ const mapStateToProps = ({isLoggedIn}) => {
     return {isLoggedIn}
 }
 
-export default connect(mapStateToProps, actions)(WithApiService(App));
+export default connect(mapStateToProps, actions)(App);

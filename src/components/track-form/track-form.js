@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import WithApiService from "../hoc/with-api-service";
 import {Button, FormControl, FormGroup, Grid, Input, InputLabel, TextField} from "@material-ui/core";
+import * as actions from "../../actions";
 
 class TrackForm extends Component {
     constructor(props) {
@@ -9,6 +9,10 @@ class TrackForm extends Component {
         this.state = {
             signals: {}
         }
+    }
+
+    componentDidMount() {
+        this.props.fetchSignalsNames();
     }
 
     handleSubmit = (e) => {
@@ -19,7 +23,7 @@ class TrackForm extends Component {
             value: value,
             date: this.state.date || new Date().toISOString().substring(0, 10)
         }))
-        this.props.apiService.saveSignals(toSave)
+        this.props.saveSignals(toSave);
     }
 
     handleOnChangeSignal = (e) => {
@@ -40,7 +44,7 @@ class TrackForm extends Component {
     }
 
     render() {
-        const listItems = this.props.apiService.getSignalNames().map((name) => {
+        const listItems = this.props.signalNames.map((name) => {
             return (
                 <FormControl>
                     <InputLabel htmlFor={name}>{`${name}:`}</InputLabel>
@@ -78,4 +82,8 @@ class TrackForm extends Component {
     }
 }
 
-export default WithApiService(TrackForm);
+const mapStateToProps = ({signalNames}) => {
+    return {signalNames}
+}
+
+export default connect(mapStateToProps, actions)(TrackForm);

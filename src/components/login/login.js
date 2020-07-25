@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import WithApiService from "../hoc/with-api-service";
 import * as actions from "../../actions";
 import {Button, FormControl, InputLabel, Input, FormGroup, Grid} from '@material-ui/core';
 
@@ -8,7 +7,7 @@ import {Button, FormControl, InputLabel, Input, FormGroup, Grid} from '@material
 class LoginForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.fetchAccessToken(this.props.apiService, this.state.username, this.state.password)
+        this.props.fetchAccessToken(this.state.username, this.state.password)
     }
 
 
@@ -48,4 +47,4 @@ class LoginForm extends Component {
     }
 }
 
-export default connect(null, actions)(WithApiService(LoginForm));
+export default connect(null, actions)(LoginForm);
