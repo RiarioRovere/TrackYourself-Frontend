@@ -6,7 +6,7 @@ import * as actions from "../../../actions";
 
 class InsightsBrowser extends Component {
     componentDidMount() {
-        this.props.fetchSignalsNames();
+        this.props.fetchSignalNames();
     }
 
     render() {

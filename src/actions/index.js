@@ -14,7 +14,7 @@ const fetchAccessToken = (username, password) => {
         })
             .then(data => data.json())
             .then(v => {
-                localStorage.setItem('token', v.token)
+                localStorage.setItem('token', v.jwtToken)
                 window.location.reload(false);
                 dispatch({
                     type: 'ACCESS_TOKEN_FETCHED',
@@ -50,11 +50,59 @@ const fetchSignals = () => {
     }
 }
 
-const fetchSignalsNames = () => {
-    const signalNames = apiService.getSignalNames();
-    return {
-        type: 'SIGNAL_NAMES_FETCHED',
-        value: signalNames
+const fetchSignalNames = () => {
+    return (dispatch) => {
+        apiService.getSignalNames().then((signalNames) => {
+            dispatch({
+                type: 'SIGNAL_NAMES_FETCHED',
+                value: signalNames
+            })
+        })
+    }
+}
+
+const fetchSummary = (date) => {
+    return (dispatch) => {
+        apiService.getSummary(date).then((summary) => {
+            dispatch({
+                type: 'SUMMARY_FETCHED',
+                value: summary
+            })
+        })
+    }
+}
+
+const saveSummary = (summary, date) => {
+    return (dispatch) => {
+        apiService.saveSummary(summary, date).then(() => {
+            dispatch({
+                type: 'SUMMARY_SAVED'
+            })
+        })
+    }
+}
+
+const addSignalName = (name) => {
+    return (dispatch) => {
+        apiService.addSignalName(name).then(() => {
+            dispatch({
+                type: 'SIGNAL_NAME_ADDED',
+                value: name
+            })
+            fetchSignalNames()(dispatch);
+        })
+    }
+}
+
+const deleteSignalName = (name) => {
+    return (dispatch) => {
+        apiService.deleteSignalName(name).then(() => {
+            dispatch({
+                type: 'SIGNAL_NAME_DELETED',
+                value: name
+            })
+            fetchSignalNames()(dispatch);
+        })
     }
 }
 
@@ -90,14 +138,17 @@ const logout = () => {
     }
 }
 
-
 export {
+    addSignalName,
+    deleteSignalName,
     fetchInsight,
     fetchAccessToken,
     fetchSignals,
-    fetchSignalsNames,
+    fetchSignalNames,
+    fetchSummary,
     fetchLoginState,
     logout,
     registerUser,
-    saveSignals
+    saveSignals,
+    saveSummary
 }

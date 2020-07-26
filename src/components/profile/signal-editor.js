@@ -15,11 +15,12 @@ class SignalEditor extends Component {
         }
     }
     componentDidMount() {
-        this.props.fetchSignalsNames();
+        this.props.fetchSignalNames();
     }
 
     handleRemove = (name) => {
         console.log('remove', name)
+        this.props.deleteSignalName(name);
     }
 
     handleChange = (e) => {
@@ -32,6 +33,10 @@ class SignalEditor extends Component {
 
     handleAdd = () => {
         console.log('add', this.state.newSignal)
+        this.props.addSignalName(this.state.newSignal);
+        this.setState({
+            newSignal: ''
+        })
     }
 
     render() {
@@ -52,7 +57,7 @@ class SignalEditor extends Component {
             <Grid container direction="column">
                 {signalNamesMapped}
                 <Grid container alignItems="center">
-                    <Input onChange={this.handleChange} />
+                    <Input onChange={this.handleChange} value={this.state.newSignal}/>
                     <IconButton onClick={this.handleAdd}>
                         <AddCircleOutlineIcon/>
                     </IconButton>

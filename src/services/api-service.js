@@ -16,6 +16,28 @@ class ApiService {
         })
     }
 
+    addSignalName = (name) => {
+        return fetch(`${this.apiUrl}/signal-name`, {
+            method: 'POST',
+            body: JSON.stringify({name}),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+    }
+
+    deleteSignalName = (name) => {
+        return fetch(`${this.apiUrl}/signal-name`, {
+            method: 'DELETE',
+            body: JSON.stringify({name}),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+    }
+
     getSignals = () => {
         return fetch(`${this.apiUrl}/signals`, {
             headers: {
@@ -30,13 +52,51 @@ class ApiService {
     }
 
     getSignalNames = () => {
-        return [
-            'sleep',
-            'sport',
-            'nutrition',
-            'meditation',
-            'life qualiity',
-        ]
+        return fetch(`${this.apiUrl}/signal-name`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+            .then((r) => {
+                return r.json();
+            })
+            .then(r => {
+                return r.map(({name}) => name);
+            })
+            .catch(error => console.log(error))
+    }
+
+    getSummary = (date) => {
+        console.log('date', date)
+        return fetch(`${this.apiUrl}/summary?date=${date}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+            .then((r) => {
+                return r.json();
+            })
+            .then(({summary}) => summary)
+            .catch(error => console.log(error))
+    }
+
+    saveSummary = (summary, date) => {
+        console.log('date summary', date, summary)
+        return fetch(`${this.apiUrl}/summary`, {
+            method: 'POST',
+            body: JSON.stringify({summary, date}),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+            .then((r) => {
+                return r.json();
+            })
+            .then(({summary}) => summary)
+            .catch(error => console.log(error))
     }
 
     isLoggedIn = () => {

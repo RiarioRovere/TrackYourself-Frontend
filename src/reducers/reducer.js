@@ -2,7 +2,8 @@ const initState = {
     signals: [],
     signalNames: [],
     isLoggedIn: false,
-    insight: ""
+    insight: "",
+    summary: ''
 };
 
 const reducer = (state = initState, action) => {
@@ -27,6 +28,11 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 insight: action.value
+            }
+        case 'SUMMARY_FETCHED':
+            return {
+                ...state,
+                summary: action.value
             }
         default:
             return state;

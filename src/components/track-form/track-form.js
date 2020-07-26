@@ -1,18 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, FormControl, FormGroup, Grid, Input, InputLabel, TextField} from "@material-ui/core";
+import {Button, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
 import * as actions from "../../actions";
 
 class TrackForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            signals: {}
+            signals: {},
+            summary: ''
         }
     }
 
     componentDidMount() {
-        this.props.fetchSignalsNames();
+        this.props.fetchSignalNames();
     }
 
     handleSubmit = (e) => {
@@ -24,6 +25,7 @@ class TrackForm extends Component {
             date: this.state.date || new Date().toISOString().substring(0, 10)
         }))
         this.props.saveSignals(toSave);
+        this.props.saveSummary(this.state.summary, this.state.date)
     }
 
     handleOnChangeSignal = (e) => {
@@ -46,12 +48,18 @@ class TrackForm extends Component {
     render() {
         const listItems = this.props.signalNames.map((name) => {
             return (
-                <FormControl>
-                    <InputLabel htmlFor={name}>{`${name}:`}</InputLabel>
-                    <Input id={name}
-                           name={name}
-                           type={'number'}
-                           onChange={this.handleOnChangeSignal}
+                <FormControl style={{'padding-top': '5px'}}>
+                    <TextField
+                        margin="dense"
+                        label={name}
+                        id={name}
+                        name={name}
+                        type={'number'}
+                        onChange={this.handleOnChangeSignal}
+                        variant="outlined"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
                     />
                 </FormControl>
             )
@@ -61,7 +69,7 @@ class TrackForm extends Component {
             <Grid container justify="center">
                 <Grid item xs={5} lg={2}>
                     <FormGroup>
-                        <FormControl>
+                        <FormControl style={{'padding-top': '10px'}}>
                             <TextField
                                 id="date"
                                 label="date"
@@ -71,9 +79,24 @@ class TrackForm extends Component {
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
+                                variant="outlined"
                             />
                         </FormControl>
                         {listItems}
+                        <TextField
+                            margin="dense"
+                            id="summary"
+                            label="summary"
+                            type="text"
+                            name="summary"
+                            multiline={true}
+                            value={this.state.summary}
+                            onChange={this.handleOnChange}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                        />
                         <Button color="primary" onClick={this.handleSubmit}>submit</Button>
                     </FormGroup>
                 </Grid>
