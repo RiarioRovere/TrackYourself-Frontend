@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import { withRouter } from "react-router";
 import {Button, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
 import * as actions from "../../actions";
 
@@ -26,6 +27,7 @@ class TrackForm extends Component {
         }))
         this.props.saveSignals(toSave);
         this.props.saveSummary(this.state.summary, this.state.date)
+        this.props.history.push('/analyze')
     }
 
     handleOnChangeSignal = (e) => {
@@ -109,4 +111,4 @@ const mapStateToProps = ({signalNames}) => {
     return {signalNames}
 }
 
-export default connect(mapStateToProps, actions)(TrackForm);
+export default connect(mapStateToProps, actions)(withRouter(TrackForm));

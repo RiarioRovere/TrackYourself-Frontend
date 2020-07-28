@@ -20,7 +20,7 @@ class SummaryViewer extends Component {
 
     render() {
         return (
-            <Grid xs={10} container direction="column">
+            <Grid xs={10} lg={3} container direction="column">
                 <TextField
                     margin="dense"
                     id="date"

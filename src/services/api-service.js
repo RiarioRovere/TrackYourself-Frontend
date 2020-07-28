@@ -76,10 +76,18 @@ class ApiService {
             }
         })
             .then((r) => {
-                return r.json();
+                return r.text();
+            })
+            .then(r => {
+                if (r) {
+                    return JSON.parse(r);
+                }
+                return {
+                    summary: ''
+                }
             })
             .then(({summary}) => summary)
-            .catch(error => console.log(error))
+            .catch(error => console.warn(error))
     }
 
     saveSummary = (summary, date) => {

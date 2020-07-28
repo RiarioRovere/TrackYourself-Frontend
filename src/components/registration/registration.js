@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Button, FormControl, FormGroup, Input, InputLabel, Grid} from "@material-ui/core";
+import { withRouter } from "react-router";
 import {connect} from "react-redux";
 import * as actions from "../../actions";
 
@@ -7,6 +8,7 @@ class Registration extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.registerUser(this.state.username, this.state.password)
+        window.location.href = '/login';
     }
 
     handleOnChange = (e) => {
@@ -46,4 +48,4 @@ class Registration extends Component {
 }
 
 
-export default connect(null, actions)(Registration);
+export default connect(null, actions)(withRouter((Registration)));
