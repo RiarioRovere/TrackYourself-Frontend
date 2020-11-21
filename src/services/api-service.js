@@ -67,6 +67,19 @@ class ApiService {
             .catch(error => console.log(error))
     }
 
+    getGoals = () => {
+        return fetch(`${this.apiUrl}/goals`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+            .then((r) => {
+                return r.json();
+            })
+            .catch(error => console.error(error))
+    }
+
     getSummary = (date) => {
         console.log('date', date)
         return fetch(`${this.apiUrl}/summary?date=${date}`, {
@@ -138,6 +151,33 @@ class ApiService {
                 return 'Be happy'
         }
     }
+
+    getGoal = (id) => {
+        return fetch(`${this.apiUrl}/goal/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+            .then((r) => {
+                return r.json();
+            })
+            .catch(error => console.error(error))
+    }
+
+    getReports = (id) => {
+        return fetch(`${this.apiUrl}/goal/${id}/reports`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        })
+            .then((r) => {
+                return r.json();
+            })
+            .catch(error => console.error(error))
+    }
+
 }
 
 

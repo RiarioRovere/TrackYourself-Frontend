@@ -16,6 +16,9 @@ class NavigationBar extends Component {
         return (
             <AppBar position="relative">
                 <Toolbar>
+                    <Button component={RouterLink} to="/goals">
+                        Goals
+                    </Button>
                     <Button component={RouterLink} to="/analyze">
                         Analyze
                     </Button>

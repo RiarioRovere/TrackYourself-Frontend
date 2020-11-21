@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import './app.css';
 import SignalPage from "../pages/signal-page";
 import AnalysesPage from "../pages/analyses-page";
+import GoalsPage from "../pages/goals-page"
 import LoginPage from "../pages/login-page";
 import HomePage from "../pages/home-page";
 import RegistrationPage from "../pages/registration-page";
@@ -13,6 +14,7 @@ import InsightPage from "../pages/insight-page";
 import InsightsBrowserPage from "../pages/insights-browser-page";
 import ProfilePage from "../pages/profile-page";
 import SignalEditor from "../profile/signal-editor";
+import GoalPage from "../pages/goal-page";
 
 class App extends Component {
     componentDidMount() {
@@ -30,6 +32,9 @@ class App extends Component {
                     {this.props.isLoggedIn !== true &&
                         <Route path="/"> <LoginPage/> </Route>
                     }
+                    <Route exact path="/goals">
+                        <GoalsPage />
+                    </Route>
                     <Route exact path="/analyze">
                         <AnalysesPage />
                     </Route>
@@ -37,6 +42,7 @@ class App extends Component {
                         <SignalPage />
                     </Route>
                     <Route path="/insight/:id" component={InsightPage} />
+                    <Route path="/goal/:id" component={GoalPage} />
                     <Route path="/insights" exact component={InsightsBrowserPage} />
                     <Route exact path="/">
                         <HomePage />

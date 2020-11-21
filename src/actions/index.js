@@ -61,6 +61,40 @@ const fetchSignalNames = () => {
     }
 }
 
+const fetchGoals = () => {
+    return (dispatch) => {
+        apiService.getGoals().then((goals) => {
+            console.log(goals)
+            dispatch({
+                type: 'GOALS_FETCHED',
+                value: goals
+            })
+        })
+    }
+}
+
+const fetchGoal = (id) => {
+    return (dispatch) => {
+        apiService.getGoal(id).then((goal) => {
+            dispatch({
+                type: 'GOAL_FETCHED',
+                value: goal
+            })
+        })
+    }
+}
+
+const fetchReports = (goalId) => {
+    return (dispatch) => {
+        apiService.getReports(goalId).then((reports) => {
+            dispatch({
+                type: 'REPORTS_FETCHED',
+                value: reports
+            })
+        })
+    }
+}
+
 const fetchSummary = (date) => {
     return (dispatch) => {
         apiService.getSummary(date).then((summary) => {
@@ -145,6 +179,9 @@ export {
     fetchAccessToken,
     fetchSignals,
     fetchSignalNames,
+    fetchGoals,
+    fetchGoal,
+    fetchReports,
     fetchSummary,
     fetchLoginState,
     logout,
