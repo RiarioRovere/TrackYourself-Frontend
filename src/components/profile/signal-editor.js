@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux'
-import * as actions from '../../actions'
+import {fetchSignalNames, addSignalName, deleteSignalName} from '../../actions'
 import {Grid} from "@material-ui/core"
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -8,8 +8,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 
 class SignalEditor extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             newSignal: ''
         }
@@ -19,20 +19,17 @@ class SignalEditor extends Component {
     }
 
     handleRemove = (name) => {
-        console.log('remove', name)
         this.props.deleteSignalName(name);
     }
 
     handleChange = (e) => {
         const {value} = e.target
-        console.log('change', value)
         this.setState({
             newSignal: value
         })
     }
 
     handleAdd = () => {
-        console.log('add', this.state.newSignal)
         this.props.addSignalName(this.state.newSignal);
         this.setState({
             newSignal: ''
@@ -42,7 +39,7 @@ class SignalEditor extends Component {
     render() {
         const signalNamesMapped = this.props.signalNames.map((name) => {
             return (
-                <Grid container alignItems="center">
+                <Grid container key={name} alignItems="center">
                     {/* TODO: Change layout to be cool */}
                     <Grid item xs={4}>
                         <p>{name}</p>
@@ -62,7 +59,6 @@ class SignalEditor extends Component {
                         <AddCircleOutlineIcon/>
                     </IconButton>
                 </Grid>
-
             </Grid>
         )
     }
@@ -72,4 +68,4 @@ const mapStateToProps = ({signalNames}) => {
     return {signalNames}
 }
 
-export default connect(mapStateToProps, actions)(SignalEditor);
+export default connect(mapStateToProps, {addSignalName, fetchSignalNames, deleteSignalName})(SignalEditor);

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {Grid, Typography} from "@material-ui/core";
-import * as actions from "../../../actions";
+import {fetchInsight} from "../../../actions";
 
 class Viewer extends Component {
     componentDidMount() {
@@ -26,4 +26,4 @@ const mapStateToProps = ({insight}) => {
     return {insight}
 }
 
-export default connect(mapStateToProps, actions)(Viewer);
+export default connect(mapStateToProps, {fetchInsight})(Viewer);

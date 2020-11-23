@@ -1,0 +1,1 @@
+export const API_HOSTNAME = 'https://api.trackyourself.io';

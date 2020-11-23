@@ -1,11 +1,12 @@
-import ApiService from '../services/api-service'
+import axios from "../utils/api";
+import {API_HOSTNAME} from "../constants/api";
+import * as types from '../constants/types'
 
-const apiService = new ApiService();
 
-const fetchAccessToken = (username, password) => {
+export const fetchAccessToken = (username, password) => {
     return function (dispatch) {
         const request = {username, password}
-        fetch(`${apiService.apiUrl}/user/authenticate`, {
+        fetch(`${API_HOSTNAME}/user/authenticate`, {
             method: 'POST',
             body: JSON.stringify(request),
             headers: {
@@ -25,38 +26,39 @@ const fetchAccessToken = (username, password) => {
     }
 }
 
-const registerUser = (username, password) => {
-    return function (dispatch) {
+export const registerUser = (username, password) => {
+    return async (dispatch) => {
         const request = {username, password};
-        fetch(`${apiService.apiUrl}/user/register`, {
+        await fetch(`${API_HOSTNAME}/user/register`, {
             method: 'POST',
             body: JSON.stringify(request),
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).catch(e => console.warn(e))
+        }).catch(e => console.error(e))
+        window.location.href = '/login';
     }
 }
 
-const fetchSignals = () => {
-    return function (dispatch) {
-        apiService.getSignals().then((signals) => {
-                dispatch({
-                    type: 'SIGNALS_FETCHED',
-                    value: signals
-                })
-            }
-        )
+export const fetchSignals = () => {
+    return async (dispatch) => {
+        const response = await axios.get('/signals')
+        const {data} = response
+        dispatch({
+            type: types.SIGNALS_FETCHED,
+            value: data
+        })
     }
 }
 
-const fetchSignalNames = () => {
-    return (dispatch) => {
-        apiService.getSignalNames().then((signalNames) => {
-            dispatch({
-                type: 'SIGNAL_NAMES_FETCHED',
-                value: signalNames
-            })
+export const fetchSignalNames = () => {
+    return async (dispatch) => {
+        const response = await axios.get('/signal-name')
+        let {data} = response
+        data = data.map(({name}) => name)
+        dispatch({
+            type: types.SIGNAL_NAMES_FETCHED,
+            value: data
         })
     }
 }
@@ -95,97 +97,96 @@ const fetchReports = (goalId) => {
     }
 }
 
-const fetchSummary = (date) => {
-    return (dispatch) => {
-        apiService.getSummary(date).then((summary) => {
-            dispatch({
-                type: 'SUMMARY_FETCHED',
-                value: summary
-            })
+export const fetchSummary = (date) => {
+    return async (dispatch) => {
+        const {data} = await axios.get('/summary', {params: {date}})
+        dispatch({
+            type: types.SUMMARY_FETCHED,
+            value: data?.summary || ''
         })
     }
 }
 
-const saveSummary = (summary, date) => {
-    return (dispatch) => {
-        apiService.saveSummary(summary, date).then(() => {
-            dispatch({
-                type: 'SUMMARY_SAVED'
-            })
+export const saveSummary = (summary, date) => {
+    return async (dispatch) => {
+        await axios.post('/summary', JSON.stringify({summary, date}))
+        dispatch({
+            type: types.SUMMARY_SAVED
         })
     }
 }
 
-const addSignalName = (name) => {
-    return (dispatch) => {
-        apiService.addSignalName(name).then(() => {
-            dispatch({
-                type: 'SIGNAL_NAME_ADDED',
-                value: name
-            })
-            fetchSignalNames()(dispatch);
+export const addSignalName = (name) => {
+    return async (dispatch) => {
+        await axios.post('/signal-name', JSON.stringify({name}))
+        dispatch({
+            type: types.SIGNAL_NAME_ADDED,
+            value: name
+        })
+        await fetchSignalNames()(dispatch);
+    }
+}
+
+export const deleteSignalName = (name) => {
+    return async (dispatch) => {
+        await axios.delete('/signal-name', {data: JSON.stringify({name})})
+        dispatch({
+            type: types.SIGNAL_NAME_DELETED,
+            value: name
+        })
+        await fetchSignalNames()(dispatch);
+    }
+}
+
+export const fetchLoginState = () => {
+    return async (dispatch) => {
+        const {status} = await axios.get('/signal-name')
+        const isLoggedIn = status !== 401;
+        dispatch({
+            type: types.LOGIN_STATE_FETCHED,
+            value: isLoggedIn
         })
     }
 }
 
-const deleteSignalName = (name) => {
-    return (dispatch) => {
-        apiService.deleteSignalName(name).then(() => {
-            dispatch({
-                type: 'SIGNAL_NAME_DELETED',
-                value: name
-            })
-            fetchSignalNames()(dispatch);
-        })
+export const saveSignals = (signals) => {
+    return async (dispatch) => {
+        await axios.post('/signals', JSON.stringify(signals))
     }
 }
 
-const fetchLoginState = () => {
-    return function (dispatch) {
-        apiService.isLoggedIn().then(isLoggedIn => {
-            dispatch({
-                type: 'LOGIN_STATE_FETCHED',
-                value: isLoggedIn
-            })
-        })
+export const fetchInsight = (id) => {
+    let insight;
+    switch (id) {
+        case 'sport':
+            insight = 'Do sport'
+            break
+        case 'sleep':
+            insight = 'Sleep well'
+            break
+        case 'water':
+            insight = 'Drink water'
+            break
+        case 'meditation':
+            insight = 'Keep calm'
+            break
+        case 'nutrition':
+            insight = 'Eat well'
+            break
+        default:
+            insight = 'Be happy'
+            break
     }
-}
-
-const saveSignals = (toSave) => {
-    return function (dispatch) {
-        apiService.saveSignals(toSave)
-    }
-}
-
-const fetchInsight = (id) => {
     return {
-        type: 'INSIGHT_FETCHED',
-        value: apiService.fetchInsight(id)
+        type: types.INSIGHT_FETCHED,
+        value: insight
     }
 }
 
-const logout = () => {
+export const logout = () => {
     localStorage.removeItem("token")
     window.location.href = "/"
     return {
-        type: 'LOGOUT',
+        type: types.LOGOUT,
     }
-}
-
-export {
-    addSignalName,
-    deleteSignalName,
-    fetchInsight,
-    fetchAccessToken,
-    fetchSignals,
-    fetchSignalNames,
-    fetchGoals,
-    fetchGoal,
-    fetchReports,
-    fetchSummary,
-    fetchLoginState,
-    logout,
-    registerUser,
-    saveSignals,
-    saveSummary
 }

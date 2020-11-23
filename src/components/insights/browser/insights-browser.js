@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {Button, Grid, Typography} from "@material-ui/core";
 import {connect} from "react-redux";
-import * as actions from "../../../actions";
+import {fetchSignalNames} from "../../../actions";
 
 class InsightsBrowser extends Component {
     componentDidMount() {
@@ -12,7 +12,7 @@ class InsightsBrowser extends Component {
     render() {
         const listItems = this.props.signalNames.map(name => {
             return (
-                <Button  component={Link} to={`/insight/${name}`}>
+                <Button component={Link} key={name} to={`/insight/${name}`}>
                     {name}
                 </Button>
             );
@@ -34,4 +34,4 @@ const mapStateToProps = ({signalNames}) => {
     return {signalNames}
 }
 
-export default connect(mapStateToProps, actions)(InsightsBrowser);
+export default connect(mapStateToProps, {fetchSignalNames})(InsightsBrowser);

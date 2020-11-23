@@ -1,3 +1,5 @@
+import * as types from '../constants/types'
+
 const initState = {
     signals: [],
     goals: [],
@@ -11,28 +13,27 @@ const initState = {
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
-        case "LOGIN_STATE_FETCHED":
+        case types.LOGIN_STATE_FETCHED:
             return {
                 ...state,
                 isLoggedIn: action.value
             }
-        case "SIGNALS_FETCHED":
+        case types.SIGNALS_FETCHED:
             return {
                 ...state,
                 signals: action.value
             }
-        case "SIGNAL_NAMES_FETCHED":
-            console.log('SIGNAL_NAMES_FETCHED', action.value)
+        case types.SIGNAL_NAMES_FETCHED:
             return {
                 ...state,
                 signalNames: action.value
             }
-        case 'INSIGHT_FETCHED':
+        case types.INSIGHT_FETCHED:
             return {
                 ...state,
                 insight: action.value
             }
-        case 'SUMMARY_FETCHED':
+        case types.SUMMARY_FETCHED:
             return {
                 ...state,
                 summary: action.value

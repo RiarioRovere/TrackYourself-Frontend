@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { withRouter } from "react-router";
 import {Button, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
-import * as actions from "../../actions";
+import {fetchSignalNames, saveSignals, saveSummary} from "../../actions";
 
 class TrackForm extends Component {
     constructor(props) {
@@ -50,7 +50,7 @@ class TrackForm extends Component {
     render() {
         const listItems = this.props.signalNames.map((name) => {
             return (
-                <FormControl style={{'padding-top': '5px'}}>
+                <FormControl key={name} style={{'paddingTop': '5px'}}>
                     <TextField
                         margin="dense"
                         label={name}
@@ -71,7 +71,7 @@ class TrackForm extends Component {
             <Grid container justify="center">
                 <Grid item xs={5} lg={2}>
                     <FormGroup>
-                        <FormControl style={{'padding-top': '10px'}}>
+                        <FormControl style={{'paddingTop': '10px'}}>
                             <TextField
                                 id="date"
                                 label="date"
@@ -111,4 +111,4 @@ const mapStateToProps = ({signalNames}) => {
     return {signalNames}
 }
 
-export default connect(mapStateToProps, actions)(withRouter(TrackForm));
+export default connect(mapStateToProps, {fetchSignalNames, saveSummary, saveSignals})(withRouter(TrackForm));

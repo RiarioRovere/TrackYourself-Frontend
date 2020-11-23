@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import * as actions from "../../actions";
+import {fetchSignals} from "../../actions";
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
@@ -63,10 +63,9 @@ class Analyzer extends Component {
                     <Legend verticalAlign={'top'}/>
                     {
                         signalNames.map((name) => {
-                            return <Line type="monotone" dataKey={name} stroke={this.colors[name]} activeDot={{r: 8}}/>
+                            return <Line type="monotone" key={name} dataKey={name} stroke={this.colors[name]} activeDot={{r: 8}}/>
                         })
                     }
-
                 </LineChart>
             </div>
         )
@@ -82,4 +81,4 @@ const mapStateToProps = ({signals}) => {
     return {signals: mappedSignals}
 }
 
-export default connect(mapStateToProps, actions)(Analyzer);
+export default connect(mapStateToProps, {fetchSignals})(Analyzer);

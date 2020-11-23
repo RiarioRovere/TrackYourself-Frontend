@@ -8,7 +8,7 @@ import LoginPage from "../pages/login-page";
 import HomePage from "../pages/home-page";
 import RegistrationPage from "../pages/registration-page";
 import NavigationBar from "../navigation-bar/navigation-bar";
-import * as actions from "../../actions";
+import {fetchLoginState} from "../../actions";
 import {connect} from "react-redux";
 import InsightPage from "../pages/insight-page";
 import InsightsBrowserPage from "../pages/insights-browser-page";
@@ -59,4 +59,4 @@ const mapStateToProps = ({isLoggedIn}) => {
     return {isLoggedIn}
 }
 
-export default connect(mapStateToProps, actions)(App);
+export default connect(mapStateToProps, {fetchLoginState})(App);

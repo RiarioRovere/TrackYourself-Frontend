@@ -3,13 +3,13 @@ import {Link as RouterLink} from 'react-router-dom';
 import {AppBar, Button} from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import {connect} from "react-redux";
-import * as actions from "../../actions"
+import {logout} from "../../actions"
 
 class NavigationBar extends Component {
 
     handleClick = event => {
         event.preventDefault();
-        actions.logout();
+        this.props.logout();
     }
 
     render() {
@@ -53,4 +53,4 @@ const mapStateToProps = ({isLoggedIn}) => {
     return {isLoggedIn}
 }
 
-export default connect(mapStateToProps, actions)(NavigationBar);
+export default connect(mapStateToProps, {logout})(NavigationBar);
