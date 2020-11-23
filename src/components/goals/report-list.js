@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Grid, Typography} from "@material-ui/core";
 import {connect} from "react-redux";
-import * as actions from "../../actions";
+import {fetchReports} from "../../actions";
 
 class ReportList extends Component {
     componentDidMount() {
@@ -9,7 +9,8 @@ class ReportList extends Component {
     }
 
     render() {
-        const listItems = this.props.reports.map(({content}) => {
+        console.log(this.props.reports)
+        const listItems = this.props.reports?.map(({content}) => {
             return (
                 <li>{content}</li>
             );
@@ -33,4 +34,4 @@ const mapStateToProps = ({reports}) => {
     return {reports}
 }
 
-export default connect(mapStateToProps, actions)(ReportList);
+export default connect(mapStateToProps, {fetchReports})(ReportList);

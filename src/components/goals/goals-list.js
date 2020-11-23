@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {Button, Grid, Typography} from "@material-ui/core";
 import {connect} from "react-redux";
-import * as actions from "../../actions";
+import {fetchGoals} from "../../actions";
 
 class GoalsList extends Component {
     componentDidMount() {
@@ -12,7 +12,7 @@ class GoalsList extends Component {
     render() {
         const listItems = this.props.goals.map(({title, id}) => {
             return (
-                <Button  component={Link} to={`/goal/${id}`}>
+                <Button component={Link} key={title} to={`/goal/${id}`}>
                     {title}
                 </Button>
             );
@@ -34,4 +34,4 @@ const mapStateToProps = ({goals}) => {
     return {goals}
 }
 
-export default connect(mapStateToProps, actions)(GoalsList);
+export default connect(mapStateToProps, {fetchGoals})(GoalsList);

@@ -63,36 +63,32 @@ export const fetchSignalNames = () => {
     }
 }
 
-const fetchGoals = () => {
-    return (dispatch) => {
-        apiService.getGoals().then((goals) => {
-            console.log(goals)
-            dispatch({
-                type: 'GOALS_FETCHED',
-                value: goals
-            })
+export const fetchGoals = () => {
+    return async (dispatch) => {
+        const {data} = await axios.get('/goals')
+        dispatch({
+            type: types.GOALS_FETCHED,
+            value: data
         })
     }
 }
 
-const fetchGoal = (id) => {
-    return (dispatch) => {
-        apiService.getGoal(id).then((goal) => {
-            dispatch({
-                type: 'GOAL_FETCHED',
-                value: goal
-            })
+export const fetchGoal = (id) => {
+    return async (dispatch) => {
+        const {data} = await axios.get(`/goal/${id}`)
+        dispatch({
+            type: types.GOAL_FETCHED,
+            value: data
         })
     }
 }
 
-const fetchReports = (goalId) => {
-    return (dispatch) => {
-        apiService.getReports(goalId).then((reports) => {
-            dispatch({
-                type: 'REPORTS_FETCHED',
-                value: reports
-            })
+export const fetchReports = (goalId) => {
+    return async (dispatch) => {
+        const {data} = await axios.get(`/goal/${goalId}/reports`)
+        dispatch({
+            type: types.REPORTS_FETCHED,
+            value: data
         })
     }
 }

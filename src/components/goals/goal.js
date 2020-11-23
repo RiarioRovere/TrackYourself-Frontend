@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {Grid, Typography} from "@material-ui/core";
-import * as actions from "../../actions";
+import {fetchGoal} from "../../actions";
 import ReportList from "./report-list";
 
 class Goal extends Component {
@@ -29,4 +29,4 @@ const mapStateToProps = ({goal}) => {
     return {goal}
 }
 
-export default connect(mapStateToProps, actions)(Goal);
+export default connect(mapStateToProps, {fetchGoal})(Goal);

@@ -38,18 +38,17 @@ const reducer = (state = initState, action) => {
                 ...state,
                 summary: action.value
             }
-        case 'GOALS_FETCHED':
+        case types.GOALS_FETCHED:
             return {
                 ...state,
                 goals: action.value
             }
-        case 'GOAL_FETCHED':
+        case types.GOAL_FETCHED:
             return {
                 ...state,
                 goal: action.value
             }
-        case 'REPORTS_FETCHED':
-            console.log(action.value);
+        case types.REPORTS_FETCHED:
             return {
                 ...state,
                 reports: action.value
