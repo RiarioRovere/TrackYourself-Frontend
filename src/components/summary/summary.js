@@ -54,7 +54,7 @@ class SummaryViewer extends Component {
     }
 }
 
-const mapStateToProps = ({summary}) => {
+const mapStateToProps = ({signal: {summary}}) => {
     return {summary}
 }
 

@@ -30,7 +30,7 @@ class GoalsList extends Component {
     }
 }
 
-const mapStateToProps = ({goals}) => {
+const mapStateToProps = ({goal: {goals}}) => {
     return {goals}
 }
 

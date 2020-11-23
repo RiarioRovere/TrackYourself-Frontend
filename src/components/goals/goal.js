@@ -25,7 +25,7 @@ class Goal extends Component {
     }
 }
 
-const mapStateToProps = ({goal}) => {
+const mapStateToProps = ({goal: {goal}}) => {
     return {goal}
 }
 

@@ -72,7 +72,7 @@ class Analyzer extends Component {
     }
 }
 
-const mapStateToProps = ({signals}) => {
+const mapStateToProps = ({signal: {signals}}) => {
     const mappedSignals = signals.map(({name, value, date}) => {
         return {
             name, value, date

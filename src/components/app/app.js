@@ -55,7 +55,7 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = ({isLoggedIn}) => {
+const mapStateToProps = ({signal: {isLoggedIn}}) => {
     return {isLoggedIn}
 }
 

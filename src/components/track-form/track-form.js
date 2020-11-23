@@ -107,7 +107,7 @@ class TrackForm extends Component {
     }
 }
 
-const mapStateToProps = ({signalNames}) => {
+const mapStateToProps = ({signal: {signalNames}}) => {
     return {signalNames}
 }
 

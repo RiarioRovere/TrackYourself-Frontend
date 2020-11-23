@@ -22,7 +22,7 @@ class Viewer extends Component {
     }
 }
 
-const mapStateToProps = ({insight}) => {
+const mapStateToProps = ({signal: {insight}}) => {
     return {insight}
 }
 

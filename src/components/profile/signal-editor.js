@@ -64,7 +64,7 @@ class SignalEditor extends Component {
     }
 }
 
-const mapStateToProps = ({signalNames}) => {
+const mapStateToProps = ({signal: {signalNames}}) => {
     return {signalNames}
 }
 

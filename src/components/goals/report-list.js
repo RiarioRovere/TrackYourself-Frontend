@@ -30,7 +30,7 @@ class ReportList extends Component {
     }
 }
 
-const mapStateToProps = ({reports}) => {
+const mapStateToProps = ({goal: {reports}}) => {
     return {reports}
 }
 
