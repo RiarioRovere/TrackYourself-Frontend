@@ -4,6 +4,8 @@ const initState = {
     goals: [],
     goal: {},
     reports: [],
+    addedGoal: '',
+    deletedGoal: ''
 };
 
 const goal = (state = initState, action) => {
@@ -22,6 +24,16 @@ const goal = (state = initState, action) => {
             return {
                 ...state,
                 reports: action.value
+            }
+        case types.GOAL_ADDED:
+            return {
+                ...state,
+                addedGoal: action.value
+            }
+        case types.GOAL_DELETE_SUCCESS:
+            return {
+                ...state,
+                deletedGoal: action.value
             }
         default:
             return state;

@@ -15,6 +15,7 @@ import InsightsBrowserPage from "../pages/insights-browser-page";
 import ProfilePage from "../pages/profile-page";
 import SignalEditor from "../profile/signal-editor";
 import GoalPage from "../pages/goal-page";
+import GoalForm from "../goals/goal-form";
 
 class App extends Component {
     componentDidMount() {
@@ -43,6 +44,7 @@ class App extends Component {
                     </Route>
                     <Route path="/insight/:id" component={InsightPage} />
                     <Route path="/goal/:id" component={GoalPage} />
+                    <Route path="/new-goal" component={GoalForm} />
                     <Route path="/insights" exact component={InsightsBrowserPage} />
                     <Route exact path="/">
                         <HomePage />

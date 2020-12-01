@@ -123,6 +123,28 @@ export const addSignalName = (name) => {
     }
 }
 
+export const addGoal = (goal) => {
+    return async (dispatch) => {
+        await axios.post('/goal', JSON.stringify(goal))
+        dispatch({
+            type: types.GOAL_ADDED,
+            value: goal.title + goal.description // TODO: move to id
+        })
+    }
+}
+
+export const deleteGoal = (id) => {
+    return async (dispatch) => {
+        const {status} = await axios.delete(`/goal/${id}`)
+        if (status === 200) {
+            dispatch({
+                type: types.GOAL_DELETE_SUCCESS,
+                value: id
+            })
+        }
+    }
+}
+
 export const deleteSignalName = (name) => {
     return async (dispatch) => {
         await axios.delete('/signal-name', {data: JSON.stringify({name})})

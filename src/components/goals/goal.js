@@ -1,12 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {Grid, Typography} from "@material-ui/core";
-import {fetchGoal} from "../../actions";
+import {Button, Grid, Typography} from "@material-ui/core";
+import {deleteGoal, fetchGoal} from "../../actions";
 import ReportList from "./report-list";
+import {withRouter} from "react-router-dom";
 
 class Goal extends Component {
     componentDidMount() {
         this.props.fetchGoal(this.props.id);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.deletedGoal === this.props.id) {
+            this.props.history.push('/goals')
+        }
+    }
+
+    onDelete = () => {
+        this.props.deleteGoal(this.props.id)
     }
 
     render() {
@@ -18,6 +29,9 @@ class Goal extends Component {
                         <Typography variant="h2"> {goal.title} </Typography>
                         <Typography variant="body1"> {goal.description} </Typography>
                         <ReportList goalId={this.props.id}/>
+                        <Button onClick={this.onDelete}>
+                            delete
+                        </Button>
                     </Grid>
                 </Grid>
             </div>
@@ -25,8 +39,8 @@ class Goal extends Component {
     }
 }
 
-const mapStateToProps = ({goal: {goal}}) => {
-    return {goal}
+const mapStateToProps = ({goal: {goal, deletedGoal}}) => {
+    return {goal, deletedGoal}
 }
 
-export default connect(mapStateToProps, {fetchGoal})(Goal);
+export default connect(mapStateToProps, {fetchGoal, deleteGoal})(withRouter(Goal));
