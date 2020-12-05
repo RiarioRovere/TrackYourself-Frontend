@@ -1,9 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {fetchSignals} from "../../actions";
-import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-} from 'recharts';
+import {fetchSignals} from "../actions/signal-actions";
+import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis,} from 'recharts';
 
 class Analyzer extends Component {
     constructor(props) {

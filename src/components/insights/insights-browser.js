@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Button, Grid, Typography} from "@material-ui/core";
 import {connect} from "react-redux";
-import {fetchSignalNames} from "../../../actions";
+import {fetchSignalNames} from "../../actions/signal-actions";
 
 class InsightsBrowser extends Component {
     componentDidMount() {

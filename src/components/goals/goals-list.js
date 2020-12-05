@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Button, Grid, Typography} from "@material-ui/core";
 import {connect} from "react-redux";
-import {fetchGoals} from "../../actions";
+import {fetchGoals} from "../../actions/goal-actions";
 
 class GoalsList extends Component {
     componentDidMount() {

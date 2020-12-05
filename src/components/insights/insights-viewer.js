@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {Grid, Typography} from "@material-ui/core";
-import {fetchInsight} from "../../../actions";
+import {fetchInsight} from "../../actions/signal-actions";
 
-class Viewer extends Component {
+class InsightsViewer extends Component {
     componentDidMount() {
         this.props.fetchInsight(this.props.id);
     }
@@ -26,4 +26,4 @@ const mapStateToProps = ({signal: {insight}}) => {
     return {insight}
 }
 
-export default connect(mapStateToProps, {fetchInsight})(Viewer);
+export default connect(mapStateToProps, {fetchInsight})(InsightsViewer);

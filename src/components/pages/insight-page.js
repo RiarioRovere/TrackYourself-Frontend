@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router";
-import Viewer from "../insights/viewer/viewer";
+import Viewer from "../insights/insights-viewer";
 
 class InsightPage extends Component {
     render() {

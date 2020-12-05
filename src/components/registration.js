@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import {Button, FormControl, FormGroup, Input, InputLabel, Grid} from "@material-ui/core";
-import { withRouter } from "react-router";
+import {Button, FormControl, FormGroup, Grid, Input, InputLabel} from "@material-ui/core";
+import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {registerUser} from "../../actions";
+import {registerUser} from "../actions/signal-actions";
 
 class Registration extends Component {
     handleSubmit = (e) => {

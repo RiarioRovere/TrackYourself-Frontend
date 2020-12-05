@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {fetchAccessToken} from "../../actions";
-import {Button, FormControl, InputLabel, Input, FormGroup, Grid} from '@material-ui/core';
+import {fetchAccessToken} from "../actions/signal-actions";
+import {Button, FormControl, FormGroup, Grid, Input, InputLabel} from '@material-ui/core';
 
 
 class LoginForm extends Component {

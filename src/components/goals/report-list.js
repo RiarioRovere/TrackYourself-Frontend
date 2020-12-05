@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Grid, Typography} from "@material-ui/core";
 import {connect} from "react-redux";
-import {fetchReports} from "../../actions";
+import {fetchReports} from "../../actions/goal-actions";
 
 class ReportList extends Component {
     componentDidMount() {

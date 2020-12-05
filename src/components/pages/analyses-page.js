@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import Analyzer from "../analizer/analizer";
-import SummaryViewer from "../summary/summary";
+import Analyzer from "../analizer";
+import SummaryViewer from "../summary";
 
 class AnalysesPage extends Component {
     render() {

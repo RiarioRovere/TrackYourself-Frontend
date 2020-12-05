@@ -3,7 +3,7 @@ import {Link as RouterLink} from 'react-router-dom';
 import {AppBar, Button} from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import {connect} from "react-redux";
-import {logout} from "../../actions"
+import {logout} from "../actions/signal-actions"
 
 class NavigationBar extends Component {
 

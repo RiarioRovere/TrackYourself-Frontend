@@ -1,21 +1,20 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import './app.css';
-import SignalPage from "../pages/signal-page";
-import AnalysesPage from "../pages/analyses-page";
-import GoalsPage from "../pages/goals-page"
-import LoginPage from "../pages/login-page";
-import HomePage from "../pages/home-page";
-import RegistrationPage from "../pages/registration-page";
-import NavigationBar from "../navigation-bar/navigation-bar";
-import {fetchLoginState} from "../../actions";
+import SignalPage from "./pages/signal-page";
+import AnalysesPage from "./pages/analyses-page";
+import GoalsPage from "./pages/goals-page"
+import LoginPage from "./pages/login-page";
+import HomePage from "./pages/home-page";
+import RegistrationPage from "./pages/registration-page";
+import NavigationBar from "./navigation-bar";
+import {fetchLoginState} from "../actions/signal-actions";
 import {connect} from "react-redux";
-import InsightPage from "../pages/insight-page";
-import InsightsBrowserPage from "../pages/insights-browser-page";
-import ProfilePage from "../pages/profile-page";
-import SignalEditor from "../profile/signal-editor";
-import GoalPage from "../pages/goal-page";
-import GoalForm from "../goals/goal-form";
+import InsightPage from "./pages/insight-page";
+import InsightsBrowserPage from "./pages/insights-browser-page";
+import ProfilePage from "./pages/profile-page";
+import SignalEditor from "./profile/signal-editor";
+import GoalPage from "./pages/goal-page";
+import GoalForm from "./goals/goal-form";
 
 class App extends Component {
     componentDidMount() {

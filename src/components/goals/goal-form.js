@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import {Button, FormGroup, Grid, TextField, Typography} from "@material-ui/core";
+import React, {Component} from 'react';
+import {Button, FormGroup, Grid, TextField} from "@material-ui/core";
 import {connect} from "react-redux";
-import {addGoal} from "../../actions";
+import {addGoal} from "../../actions/goal-actions";
 import {withRouter} from "react-router";
 
 class GoalForm extends Component {

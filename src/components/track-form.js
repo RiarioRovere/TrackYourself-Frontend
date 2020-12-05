@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import { withRouter } from "react-router";
+import {withRouter} from "react-router";
 import {Button, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
-import {fetchSignalNames, saveSignals, saveSummary} from "../../actions";
+import {fetchSignalNames, saveSignals, saveSummary} from "../actions/signal-actions";
 
 class TrackForm extends Component {
     constructor(props) {

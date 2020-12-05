@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {Button, Grid, Typography} from "@material-ui/core";
-import {deleteGoal, fetchGoal} from "../../actions";
+import {deleteGoal, fetchGoal} from "../../actions/goal-actions";
 import ReportList from "./report-list";
 import {withRouter} from "react-router-dom";
 

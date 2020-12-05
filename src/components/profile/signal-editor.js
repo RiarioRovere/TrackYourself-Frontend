@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux'
-import {fetchSignalNames, addSignalName, deleteSignalName} from '../../actions'
+import {addSignalName, deleteSignalName, fetchSignalNames} from '../../actions/signal-actions'
 import {Grid} from "@material-ui/core"
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';

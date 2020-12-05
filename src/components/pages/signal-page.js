@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Signal from "../track-form/track-form";
+import Signal from "../track-form";
 
 class SignalPage extends Component {
     render() {

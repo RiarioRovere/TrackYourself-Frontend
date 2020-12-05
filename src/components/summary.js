@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {TextField, Grid} from "@material-ui/core";
-import {fetchSummary} from "../../actions"
+import {Grid, TextField} from "@material-ui/core";
+import {fetchSummary} from "../actions/signal-actions"
 
 class SummaryViewer extends Component {
     constructor() {
