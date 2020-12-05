@@ -25,13 +25,14 @@ class Goal extends Component {
         return (
             <div>
                 <Grid container justify="flex-start">
-                    <Grid item xs={12} lg={5}>
+                    <Grid item xs={12} md={5}>
                         <Typography variant="h2"> {goal.title} </Typography>
                         <Typography variant="body1"> {goal.description} </Typography>
-                        <ReportList goalId={this.props.id}/>
                         <Button onClick={this.onDelete}>
-                            delete
+                            delete goal
                         </Button>
+
+                        <ReportList goalId={this.props.id}/>
                     </Grid>
                 </Grid>
             </div>
@@ -43,4 +44,4 @@ const mapStateToProps = ({goal: {goal, deletedGoal}}) => {
     return {goal, deletedGoal}
 }
 
-export default connect(mapStateToProps, {fetchGoal, deleteGoal})(withRouter(Goal));
+export default connect(mapStateToProps, {deleteGoal, fetchGoal})(withRouter(Goal));
