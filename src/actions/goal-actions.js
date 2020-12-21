@@ -2,9 +2,16 @@ import axios from "../utils/api";
 import * as types from '../constants/types'
 
 
-export const fetchGoals = () => {
+export const fetchGoals = (username) => {
     return async (dispatch) => {
-        const {data} = await axios.get('/goals')
+        let data;
+        if (username) {
+            const response = await axios.get(`/goals?user=${username}`)
+            data = response.data;
+        } else {
+            const response = await axios.get('/goals')
+            data = response.data;
+        }
         dispatch({
             type: types.GOALS_FETCHED,
             value: data

@@ -7,6 +7,7 @@ import {Button, FormControl, FormGroup, Grid, Input, InputLabel} from '@material
 class LoginForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
+        localStorage.setItem('login', this.state.username)
         this.props.fetchAccessToken(this.state.username, this.state.password)
     }
 

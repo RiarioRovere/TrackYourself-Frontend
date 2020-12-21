@@ -15,6 +15,8 @@ import ProfilePage from "./pages/profile-page";
 import SignalEditor from "./profile/signal-editor";
 import GoalPage from "./pages/goal-page";
 import GoalForm from "./goals/goal-form";
+import SearchPage from "./pages/search-page";
+import UserPage from "./pages/user-page";
 
 class App extends Component {
     componentDidMount() {
@@ -32,6 +34,9 @@ class App extends Component {
                     {this.props.isLoggedIn !== true &&
                         <Route path="/"> <LoginPage/> </Route>
                     }
+                    {this.props.searchText &&
+                        <Route path="/"> <SearchPage /> </Route>
+                    }
                     <Route exact path="/goals">
                         <GoalsPage />
                     </Route>
@@ -43,6 +48,7 @@ class App extends Component {
                     </Route>
                     <Route path="/insight/:id" component={InsightPage} />
                     <Route path="/goal/:id" component={GoalPage} />
+                    <Route path="/user/:username" component={UserPage} />
                     <Route path="/new-goal" component={GoalForm} />
                     <Route path="/insights" exact component={InsightsBrowserPage} />
                     <Route exact path="/">
@@ -56,8 +62,8 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = ({signal: {isLoggedIn}}) => {
-    return {isLoggedIn}
+const mapStateToProps = ({signal: {isLoggedIn}, general: {searchText}}) => {
+    return {isLoggedIn, searchText}
 }
 
 export default connect(mapStateToProps, {fetchLoginState})(App);

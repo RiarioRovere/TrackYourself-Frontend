@@ -43,9 +43,11 @@ class ReportList extends Component {
                     <Grid item xs={9}>
                         <p>{content}</p>
                     </Grid>
-                    <IconButton name={content} onClick={() => this.handleRemove(id)}>
-                        <HighlightOffIcon/>
-                    </IconButton>
+                    {this.props.isMyGoal &&
+                        <IconButton name={content} onClick={() => this.handleRemove(id)}>
+                            <HighlightOffIcon/>
+                        </IconButton>
+                    }
                 </Grid>
             );
         });
@@ -55,23 +57,25 @@ class ReportList extends Component {
                 <Grid container justify="flex-start">
                     <Grid item xs={12} md={5}>
                         <Typography variant="h4">Reports</Typography>
-                        <FormGroup>
-                            <TextField
-                                margin="dense"
-                                id="content"
-                                label="new report"
-                                type="text"
-                                name="content"
-                                multiline={true}
-                                value={this.state.content}
-                                onChange={this.handleChange}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                variant="outlined"
-                            />
-                            <Button color="primary" onClick={this.handleSubmit}>save</Button>
-                        </FormGroup>
+                        {this.props.isMyGoal &&
+                            <FormGroup>
+                                <TextField
+                                    margin="dense"
+                                    id="content"
+                                    label="new report"
+                                    type="text"
+                                    name="content"
+                                    multiline={true}
+                                    value={this.state.content}
+                                    onChange={this.handleChange}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    variant="outlined"
+                                />
+                                <Button color="primary" onClick={this.handleSubmit}>save</Button>
+                            </FormGroup>
+                        }
                         <ul>
                             {listItems}
                         </ul>

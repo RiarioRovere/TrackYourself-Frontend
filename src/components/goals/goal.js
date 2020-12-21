@@ -6,6 +6,12 @@ import ReportList from "./report-list";
 import {withRouter} from "react-router-dom";
 
 class Goal extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isMyGoal: false
+        }
+    }
     componentDidMount() {
         this.props.fetchGoal(this.props.id);
     }
@@ -13,6 +19,13 @@ class Goal extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.deletedGoal === this.props.id) {
             this.props.history.push('/goals')
+        }
+
+        if (prevProps.goal !== this.props.goal) {
+            const isMyGoal = localStorage.getItem('login') === this.props.goal.username
+            this.setState({
+                isMyGoal
+            })
         }
     }
 
@@ -28,11 +41,13 @@ class Goal extends Component {
                     <Grid item xs={12} md={5}>
                         <Typography variant="h2"> {goal.title} </Typography>
                         <Typography variant="body1"> {goal.description} </Typography>
-                        <Button onClick={this.onDelete}>
-                            delete goal
-                        </Button>
+                        {this.state.isMyGoal &&
+                            <Button onClick={this.onDelete}>
+                                delete goal
+                            </Button>
+                        }
 
-                        <ReportList goalId={this.props.id}/>
+                        <ReportList isMyGoal={this.state.isMyGoal} goalId={this.props.id}/>
                     </Grid>
                 </Grid>
             </div>

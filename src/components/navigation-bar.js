@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
-import {AppBar, TextField} from '@material-ui/core';
+import {AppBar} from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import {connect} from "react-redux";
 import {logout} from "../actions/signal-actions";
@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
+import Search from "./search";
 
 
 class NavigationBar extends Component {
@@ -86,31 +87,12 @@ class NavigationBar extends Component {
         </div>
     };
 
-    SearchButton = () => {
-        return (
-            <TextField
-                margin="dense"
-                id="search-user"
-                label="search-user"
-                type="text"
-                name="search-user"
-                // value={this.state.summary}
-                // onChange={this.handleOnChange}
-                // InputLabelProps={{
-                //     shrink: true,
-                // }}
-                variant="outlined"
-                color={"primary"}
-            />
-        )
-    }
-
     render() {
         return (
             <AppBar position="relative">
                 <Toolbar>
                     <this.MenuButton />
-                    <this.SearchButton />
+                    <Search />
                 </Toolbar>
             </AppBar>
         );

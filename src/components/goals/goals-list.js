@@ -6,7 +6,7 @@ import {fetchGoals} from "../../actions/goal-actions";
 
 class GoalsList extends Component {
     componentDidMount() {
-        this.props.fetchGoals();
+        this.props.fetchGoals(this.props.username);
     }
 
     render() {
