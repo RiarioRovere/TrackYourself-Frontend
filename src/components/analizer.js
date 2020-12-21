@@ -2,12 +2,15 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {fetchSignals} from "../actions/signal-actions";
 import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis,} from 'recharts';
+import {TextField} from "@material-ui/core";
 
 class Analyzer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            signals: []
+            signals: [],
+            from: "",
+            to: ""
         }
         this.colors = {
             sleep: "#8884d8",
@@ -20,6 +23,14 @@ class Analyzer extends Component {
 
     componentDidMount() {
         this.props.fetchSignals();
+    }
+
+    handleOnChange = (e) => {
+        const {name, value} = e.target
+        this.setState({
+            [name]: value
+        })
+        console.log('state', this.state.from, this.state.to)
     }
 
     render() {
@@ -39,20 +50,31 @@ class Analyzer extends Component {
             }
         })
         const keys = Object.keys(reduced).sort();
-        const toDraw = []
+        let toDraw = []
         keys.forEach((key) => {
             const signals = reduced[key];
             toDraw.push({date: key, ...signals})
         })
-        const signalNames = [...new Set(this.props.signals.map(({name}) => name))];
+        toDraw = toDraw.filter(({date}) => {
+            return (this.state.from ? date >= this.state.from : true) &&
+                (this.state.to ? date <= this.state.to : true)
+        })
+        let usedSignals = [];
+        toDraw.forEach((x) => {
+            usedSignals.push(...Object.keys(x))
+        })
+        usedSignals = new Set(usedSignals);
+        const signalNames = [...new Set(this.props.signals.map(({name}) => name))].filter((signalName) => {
+            return usedSignals.has(signalName);
+        });
         return (
             <div>
                 <LineChart
-                    width={411}
+                    width={400} // Cant fix to full width wtf?(( https://recharts.org/en-US/
                     height={300}
                     data={toDraw}
                     margin={{
-                        top: 5, right: 30, left: 20, bottom: 60,
+                        top: 5, right: 30, left: 0, bottom: 60,
                     }}>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis dataKey="date" angle={-45} textAnchor="end"/>
@@ -65,6 +87,34 @@ class Analyzer extends Component {
                         })
                     }
                 </LineChart>
+                <TextField
+                    margin={"dense"}
+                    size={"small"}
+                    id="from"
+                    label="from"
+                    type="date"
+                    name="from"
+                    onChange={this.handleOnChange}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    variant="outlined"
+                    style = {{width: 170}}
+                />
+                    <TextField
+                    margin={"dense"}
+                    size={"small"}
+                    id="to"
+                    label="to"
+                    type="date"
+                    name="to"
+                    onChange={this.handleOnChange}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    variant="outlined"
+                    style = {{width: 170}}
+                />
             </div>
         )
     }
