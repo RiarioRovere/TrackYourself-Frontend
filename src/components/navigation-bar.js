@@ -1,49 +1,117 @@
 import React, {Component} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
-import {AppBar, Button} from '@material-ui/core';
+import {AppBar, TextField} from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import {connect} from "react-redux";
-import {logout} from "../actions/signal-actions"
+import {logout} from "../actions/signal-actions";
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuIcon from '@material-ui/icons/Menu';
+
 
 class NavigationBar extends Component {
 
-    handleClick = event => {
-        event.preventDefault();
-        this.props.logout();
+    MenuButton = () => {
+        const [ anchorEl, setAnchorEl ] = React.useState(null);
+        const open = Boolean(anchorEl);
+
+        const handleClick = event => {
+            setAnchorEl(null);
+            event.preventDefault();
+            this.props.logout();
+        }
+
+        const handleMenu = (event) => {
+            setAnchorEl(event.currentTarget);
+        };
+
+        const handleClose = () => {
+            setAnchorEl(null);
+        };
+
+        return <div>
+            <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+            >
+                <MenuIcon />
+            </IconButton>
+            <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+                variant="selectedMenu"
+            >
+                <MenuItem component={RouterLink} onClick={handleClose} to="/goals">
+                    Goals
+                </MenuItem>
+                <MenuItem component={RouterLink} onClick={handleClose} to="/analyze">
+                    Analyze
+                </MenuItem>
+                <MenuItem component={RouterLink} onClick={handleClose} to="/signal">
+                    Track it!
+                </MenuItem>
+                <MenuItem component={RouterLink} onClick={handleClose} to="/insights">
+                    insights
+                </MenuItem>
+                {this.props.isLoggedIn === true
+                    ? < MenuItem component={RouterLink} onClick={handleClose} to="/profile">Profile</MenuItem>
+                    : null
+                }
+                {this.props.isLoggedIn === true
+                    ? <MenuItem onClick={handleClick}>LogOut</MenuItem>
+                    : null
+                }
+                {this.props.isLoggedIn === false
+                    ? <MenuItem component={RouterLink} onClick={handleClose} to="/registration">
+                        Register
+                    </MenuItem>
+                    : null
+                }
+            </Menu>
+        </div>
+    };
+
+    SearchButton = () => {
+        return (
+            <TextField
+                margin="dense"
+                id="search-user"
+                label="search-user"
+                type="text"
+                name="search-user"
+                // value={this.state.summary}
+                // onChange={this.handleOnChange}
+                // InputLabelProps={{
+                //     shrink: true,
+                // }}
+                variant="outlined"
+                color={"primary"}
+            />
+        )
     }
 
     render() {
         return (
             <AppBar position="relative">
                 <Toolbar>
-                    <Button component={RouterLink} to="/goals">
-                        Goals
-                    </Button>
-                    <Button component={RouterLink} to="/analyze">
-                        Analyze
-                    </Button>
-                    <Button component={RouterLink} to="/signal">
-                        Track it!
-                    </Button>
-                    <Button component={RouterLink} to="/insights">
-                        insights
-                    </Button>
-                    {this.props.isLoggedIn === true
-                        ? < Button component={RouterLink} to="/profile">Profile</Button>
-                        : null
-                    }
-                    {this.props.isLoggedIn === true
-                        ? <Button onClick={this.handleClick}>LogOut</Button>
-                        : null
-                    }
-                    {this.props.isLoggedIn === false
-                        ? <Button component={RouterLink} to="/registration">
-                            Register
-                        </Button>
-                        : null
-                    }
+                    <this.MenuButton />
+                    <this.SearchButton />
                 </Toolbar>
-
             </AppBar>
         );
     }
