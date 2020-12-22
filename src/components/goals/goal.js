@@ -6,7 +6,6 @@ import ReportList from "./report-list";
 import {withRouter} from "react-router-dom";
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 
 class Goal extends Component {
     constructor(props) {
@@ -44,12 +43,10 @@ class Goal extends Component {
         };
 
         return (
-            <FormGroup>
-                <FormControlLabel
-                    control={<Switch checked={auth} onChange={handleChange} aria-label="visible switch"/>}
-                    label={auth ? 'Public' : 'Private'}
-                />
-            </FormGroup>
+            <FormControlLabel
+                control={<Switch checked={auth} onChange={handleChange} aria-label="visible switch"/>}
+                label={auth ? 'Public' : 'Private'}
+            />
         )
     }
 
@@ -59,16 +56,22 @@ class Goal extends Component {
             <div>
                 <Grid container justify="flex-start">
                     <Grid item xs={12} md={5}>
-                        <Typography variant="h2"> {goal.title} </Typography>
-                        <Typography variant="body1"> {goal.description} </Typography>
-                        {this.state.isMyGoal &&
-                        <Button onClick={this.onDelete}>
-                            delete goal
-                        </Button>
-                        }
-                        {this.state.isMyGoal &&
-                        <this.isVisibleForm />
-                        }
+                        <Typography variant="h3"> {goal.title} </Typography>
+                        <Typography variant="body1">
+                            <pre style={{ fontFamily: 'inherit'}}>
+                                {goal.description}s
+                            </pre>
+                        </Typography>
+                        <Grid container xs={15} justify={"flex-start"} md={5}>
+                            {this.state.isMyGoal &&
+                            <Button onClick={this.onDelete}>
+                                delete goal
+                            </Button>
+                            }
+                            {this.state.isMyGoal &&
+                            <this.isVisibleForm />
+                            }
+                        </Grid>
                         <ReportList isMyGoal={this.state.isMyGoal} goalId={this.props.id}/>
                     </Grid>
                 </Grid>

@@ -37,14 +37,17 @@ class ReportList extends Component {
 
     render() {
         const listItems = this.props.reports?.map(({content, id}) => {
+            console.log(content)
             return (
-                <Grid container key={content} alignItems="center">
-                    {/* TODO: Change layout to be cool */}
-                    <Grid item xs={9}>
-                        <p>{content}</p>
+                <Grid item container key={content} alignItems="center" justify="center">
+                    <Grid item xs={10} spacing={0} alignItems={"center"}>
+                        <Typography variant="body1"
+                                    style={{ "wordWrap": "break-word", "white-space": "pre-wrap"}}>
+                            {content}
+                        </Typography>
                     </Grid>
                     {this.props.isMyGoal &&
-                        <IconButton name={content} onClick={() => this.handleRemove(id)}>
+                        <IconButton size={"small"} name={content} onClick={() => this.handleRemove(id)}>
                             <HighlightOffIcon/>
                         </IconButton>
                     }
@@ -56,29 +59,21 @@ class ReportList extends Component {
             <div>
                 <Grid container justify="flex-start">
                     <Grid item xs={12} md={5}>
-                        <Typography variant="h4">Reports</Typography>
+                        <Typography variant="h4" align={"center"}>Reports</Typography>
                         {this.props.isMyGoal &&
                             <FormGroup>
                                 <TextField
-                                    margin="dense"
-                                    id="content"
-                                    label="new report"
-                                    type="text"
-                                    name="content"
-                                    multiline={true}
-                                    value={this.state.content}
-                                    onChange={this.handleChange}
+                                    margin="dense" id="content" label="new report" type="text" name="content" multiline={true}
+                                    value={this.state.content} onChange={this.handleChange}
                                     InputLabelProps={{
                                         shrink: true,
-                                    }}
-                                    variant="outlined"
-                                />
+                                    }} variant="outlined" />
                                 <Button color="primary" onClick={this.handleSubmit}>save</Button>
                             </FormGroup>
                         }
-                        <ul>
+                        <Grid container direction={"column"} spacing={2}>
                             {listItems}
-                        </ul>
+                        </Grid>
                     </Grid>
                 </Grid>
             </div>
