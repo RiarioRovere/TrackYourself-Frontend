@@ -4,6 +4,9 @@ import {Button, Grid, Typography} from "@material-ui/core";
 import {deleteGoal, fetchGoal} from "../../actions/goal-actions";
 import ReportList from "./report-list";
 import {withRouter} from "react-router-dom";
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
 
 class Goal extends Component {
     constructor(props) {
@@ -33,6 +36,23 @@ class Goal extends Component {
         this.props.deleteGoal(this.props.id)
     }
 
+    isVisibleForm = () => {
+        const [auth, setAuth] = React.useState(true);
+
+        const handleChange = (event) => {
+            setAuth(event.target.checked);
+        };
+
+        return (
+            <FormGroup>
+                <FormControlLabel
+                    control={<Switch checked={auth} onChange={handleChange} aria-label="visible switch"/>}
+                    label={auth ? 'Public' : 'Private'}
+                />
+            </FormGroup>
+        )
+    }
+
     render() {
         const goal = this.props.goal;
         return (
@@ -42,11 +62,13 @@ class Goal extends Component {
                         <Typography variant="h2"> {goal.title} </Typography>
                         <Typography variant="body1"> {goal.description} </Typography>
                         {this.state.isMyGoal &&
-                            <Button onClick={this.onDelete}>
-                                delete goal
-                            </Button>
+                        <Button onClick={this.onDelete}>
+                            delete goal
+                        </Button>
                         }
-
+                        {this.state.isMyGoal &&
+                        <this.isVisibleForm />
+                        }
                         <ReportList isMyGoal={this.state.isMyGoal} goalId={this.props.id}/>
                     </Grid>
                 </Grid>

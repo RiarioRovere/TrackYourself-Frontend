@@ -9,8 +9,8 @@ class Analyzer extends Component {
         super(props);
         this.state = {
             signals: [],
-            from: "",
-            to: ""
+            from: localStorage.getItem('from'),
+            to: localStorage.getItem('to')
         }
         this.colors = {
             sleep: "#8884d8",
@@ -30,7 +30,7 @@ class Analyzer extends Component {
         this.setState({
             [name]: value
         })
-        console.log('state', this.state.from, this.state.to)
+        localStorage.setItem(name, value)
     }
 
     render() {
@@ -100,6 +100,7 @@ class Analyzer extends Component {
                     }}
                     variant="outlined"
                     style = {{width: 170}}
+                    defaultValue={localStorage.getItem('from')}
                 />
                     <TextField
                     margin={"dense"}
@@ -114,7 +115,8 @@ class Analyzer extends Component {
                     }}
                     variant="outlined"
                     style = {{width: 170}}
-                />
+                    defaultValue={localStorage.getItem('to')}
+                    />
             </div>
         )
     }
