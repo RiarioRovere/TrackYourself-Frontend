@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {fetchSignals} from "../actions/signal-actions";
-import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis,} from 'recharts';
+import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer} from 'recharts';
 import {TextField} from "@material-ui/core";
 
 class Analyzer extends Component {
@@ -69,54 +69,32 @@ class Analyzer extends Component {
         });
         return (
             <div>
-                <LineChart
-                    width={400} // Cant fix to full width wtf?(( https://recharts.org/en-US/
-                    height={300}
-                    data={toDraw}
-                    margin={{
-                        top: 5, right: 30, left: 0, bottom: 60,
-                    }}>
-                    <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis dataKey="date" angle={-45} textAnchor="end"/>
-                    <YAxis/>
-                    <Tooltip/>
-                    <Legend verticalAlign={'top'}/>
-                    {
-                        signalNames.map((name) => {
-                            return <Line type="monotone" key={name} dataKey={name} stroke={this.colors[name]} activeDot={{r: 8}}/>
-                        })
-                    }
-                </LineChart>
-                <TextField
-                    margin={"dense"}
-                    size={"small"}
-                    id="from"
-                    label="from"
-                    type="date"
-                    name="from"
-                    onChange={this.handleOnChange}
+                <ResponsiveContainer width={"100%"} height={300}>
+                    <LineChart
+                        data={toDraw}
+                        margin={{
+                            top: 5, right: 30, left: 0, bottom: 60,
+                        }}>
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <XAxis dataKey="date" angle={-45} textAnchor="end"/>
+                        <YAxis/>
+                        <Tooltip/>
+                        <Legend verticalAlign={'top'}/>
+                        {
+                            signalNames.map((name) => {
+                                return <Line type="monotone" key={name} dataKey={name} stroke={this.colors[name]} activeDot={{r: 8}}/>
+                            })
+                        }
+                    </LineChart>
+                </ResponsiveContainer>
+                <TextField margin={"dense"} size={"small"} id="from" label="from" type="date" name="from" onChange={this.handleOnChange}
                     InputLabelProps={{
                         shrink: true,
-                    }}
-                    variant="outlined"
-                    style = {{width: 170}}
-                    defaultValue={localStorage.getItem('from')}
-                />
-                    <TextField
-                    margin={"dense"}
-                    size={"small"}
-                    id="to"
-                    label="to"
-                    type="date"
-                    name="to"
-                    onChange={this.handleOnChange}
+                    }} variant="outlined" style = {{width: 170}} defaultValue={localStorage.getItem('from')} />
+                <TextField margin={"dense"} size={"small"} id="to" label="to" type="date" name="to" onChange={this.handleOnChange}
                     InputLabelProps={{
                         shrink: true,
-                    }}
-                    variant="outlined"
-                    style = {{width: 170}}
-                    defaultValue={localStorage.getItem('to')}
-                    />
+                    }} variant="outlined" style = {{width: 170}} defaultValue={localStorage.getItem('to')} />
             </div>
         )
     }
