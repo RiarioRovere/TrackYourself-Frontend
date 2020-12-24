@@ -51,6 +51,19 @@ export const deleteGoal = (id) => {
     }
 }
 
+export const updateGoal = (id, goal) => {
+    console.log('try to update')
+    return async (dispatch) => {
+        const {data, status} = await axios.post(`/goal/${id}/update`, goal)
+        if (status === 200) {
+            dispatch({
+                type: types.GOAL_UPDATE_SUCCESS,
+                value: data
+            })
+        }
+    }
+}
+
 export const fetchReports = (goalId) => {
     return async (dispatch) => {
         const {data} = await axios.get(`/goal/${goalId}/reports`)

@@ -30,6 +30,11 @@ const goal = (state = initState, action) => {
                 ...state,
                 addedGoal: action.value
             }
+        case types.GOAL_UPDATE_SUCCESS:
+            return {
+                ...state,
+                goal: action.value
+            }
         case types.GOAL_DELETE_SUCCESS:
             return {
                 ...state,

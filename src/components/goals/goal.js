@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {Button, Grid, Typography} from "@material-ui/core";
-import {deleteGoal, fetchGoal} from "../../actions/goal-actions";
+import {deleteGoal, fetchGoal, updateGoal} from "../../actions/goal-actions";
 import ReportList from "./report-list";
 import {withRouter} from "react-router-dom";
 import Switch from '@material-ui/core/Switch';
@@ -35,19 +35,11 @@ class Goal extends Component {
         this.props.deleteGoal(this.props.id)
     }
 
-    isVisibleForm = () => {
-        const [auth, setAuth] = React.useState(true);
-
-        const handleChange = (event) => {
-            setAuth(event.target.checked);
-        };
-
-        return (
-            <FormControlLabel
-                control={<Switch checked={auth} onChange={handleChange} aria-label="visible switch"/>}
-                label={auth ? 'Public' : 'Private'}
-            />
-        )
+    handlePrivateChange = (e) => {
+        this.props.updateGoal(this.props.id, {isPublic: e.target.checked})
+        // this.setState({
+        //     isPublic: e.target.checked
+        // })
     }
 
     render() {
@@ -69,7 +61,10 @@ class Goal extends Component {
                             </Button>
                             }
                             {this.state.isMyGoal &&
-                            <this.isVisibleForm />
+                                <FormControlLabel
+                                    control={<Switch checked={goal?.isPublic || false} onChange={this.handlePrivateChange} aria-label="visible switch"/>}
+                                    label={goal?.isPublic ? 'Public' : 'Private'}
+                                />
                             }
                         </Grid>
                         <ReportList isMyGoal={this.state.isMyGoal} goalId={this.props.id}/>
@@ -84,4 +79,5 @@ const mapStateToProps = ({goal: {goal, deletedGoal}}) => {
     return {goal, deletedGoal}
 }
 
-export default connect(mapStateToProps, {deleteGoal, fetchGoal})(withRouter(Goal));
+export default connect(mapStateToProps, {updateGoal, deleteGoal, fetchGoal})(withRouter(Goal));
+

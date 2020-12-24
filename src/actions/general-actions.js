@@ -1,4 +1,4 @@
-// import axios from "../utils/api";
+import axios from "../utils/api";
 import * as types from "../constants/types";
 
 export const updateSearch = (text) => {
@@ -7,11 +7,11 @@ export const updateSearch = (text) => {
             type: types.UPDATE_SEARCH_REQUEST,
             value: text
         })
-        // const {data} = await axios.post('/goal', JSON.stringify(goal))
+        const {data} = await axios.get(`/user/search?text=${text}`)
         if (text) {
             dispatch({
                 type: types.UPDATE_SEARCH_SUCCESS,
-                value: [{username: 'ilya-grid'}] // data
+                value: data
             })
         }
     }
