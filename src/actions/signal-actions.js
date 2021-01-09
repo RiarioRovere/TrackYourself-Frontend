@@ -149,6 +149,13 @@ export const fetchInsight = (id) => {
     }
 }
 
+export const setInspectingDate = (date) => {
+    return {
+        type: types.SET_INSPECTING_DATE,
+        value: date
+    }
+}
+
 export const logout = () => {
     localStorage.removeItem("token")
     window.location.href = "/"
