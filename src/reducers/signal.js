@@ -5,7 +5,8 @@ const initState = {
     signalNames: [],
     isLoggedIn: false,
     insight: '',
-    summary: ''
+    summary: '',
+    inspectingDate: ''
 };
 
 const signal = (state = initState, action) => {
@@ -29,6 +30,11 @@ const signal = (state = initState, action) => {
             return {
                 ...state,
                 summary: action.value
+            }
+        case types.SET_INSPECTING_DATE:
+            return {
+                ...state,
+                inspectingDate: action.value
             }
         case types.LOGIN_STATE_FETCHED:
             return {

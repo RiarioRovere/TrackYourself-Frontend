@@ -1,8 +1,41 @@
-import React, {Component} from "react";
+import React, {Component, useEffect} from "react";
 import {connect} from "react-redux";
-import {fetchSignals} from "../actions/signal-actions";
+import {fetchSignals, setInspectingDate} from "../actions/signal-actions";
 import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis, ResponsiveContainer} from 'recharts';
 import {TextField} from "@material-ui/core";
+
+const CustomTooltipView = (props) => {
+    const { active, setInspectingDate, label } = props;
+
+    useEffect(() => {
+        setInspectingDate(label || '');
+    }, [setInspectingDate, label])
+
+    if (active) {
+        const {payload, label} = props;
+        const renderedItems = payload.map((item, idx) => {
+            return (
+                <li key={idx} color={item.color}
+                    style={{display: "block", color: item.color, paddingTop: "4px", paddingBottom: "4px"}}>
+                    {item.name} : {item.value}
+                </li>
+            )
+        })
+        return (
+            <div className="recharts-default-tooltip"
+                style={{margin: "0px", padding: "10px", whiteSpace: "nowrap",
+                    border: "1px solid rgb(204, 204, 204)", backgroundColor: "rgb(255, 255, 255)"}}>
+                <p className="label" style={{margin: "0px"}}>{label}</p>
+                <ul style={{padding: "0px", margin: "0px"}}>
+                    {renderedItems}
+                </ul>
+            </div>
+        );
+    }
+    return null;
+}
+
+const CustomTooltip = connect(null, {setInspectingDate})(CustomTooltipView);
 
 class Analyzer extends Component {
     constructor(props) {
@@ -67,6 +100,7 @@ class Analyzer extends Component {
         const signalNames = [...new Set(this.props.signals.map(({name}) => name))].filter((signalName) => {
             return usedSignals.has(signalName);
         });
+
         return (
             <div>
                 <ResponsiveContainer width={"100%"} height={300}>
@@ -78,7 +112,8 @@ class Analyzer extends Component {
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="date" angle={-45} textAnchor="end"/>
                         <YAxis/>
-                        <Tooltip/>
+                        <Tooltip offset={40} content={<CustomTooltip />}/>
+
                         <Legend verticalAlign={'top'}/>
                         {
                             signalNames.map((name) => {
