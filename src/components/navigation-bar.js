@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import Search from "./search";
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Grid from "@material-ui/core/Grid";
 
 
 class NavigationBar extends Component {
@@ -34,23 +35,14 @@ class NavigationBar extends Component {
                 onClick={handleMenu}
                 color="inherit"
             >
-                <MenuIcon />
+                <Grid container direction="column">
+                    <p style={{fontSize: 10, margin: 0, padding: 0}}>Menu</p>
+                    <MenuIcon style={{margin: 0}}/>
+                </Grid>
             </IconButton>
-            <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-                variant="selectedMenu"
+            <Menu id="menu-appbar" anchorEl={anchorEl} anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                keepMounted transformOrigin={{vertical: 'top', horizontal: 'right'}} open={open}
+                onClose={handleClose} variant="selectedMenu"
             >
                 <MenuItem component={RouterLink} onClick={handleClose} to="/goals">
                     Goals
