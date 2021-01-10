@@ -78,6 +78,7 @@ class Analyzer extends Component {
                                 this.props.setInspectingDate(activeLabel || '')
                             }
                         }}
+                        onMouseLeave={() => this.props.setInspectingDate('')}
                         data={toDraw}
                         margin={{
                             top: 5, right: 30, left: 0, bottom: 60,
