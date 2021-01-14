@@ -15,16 +15,19 @@ import Grid from "@material-ui/core/Grid";
 
 class NavigationBar extends Component {
 
-    MenuButton = () => {
-        const [ anchorEl, setAnchorEl ] = React.useState(null);
-        const open = Boolean(anchorEl);
+    state = {
+        isMenuOpen: null,
+        isAccountOpen: null
+    }
 
+    MenuButton = () => {
+        const {isMenuOpen} = this.state;
         const handleMenu = (event) => {
-            setAnchorEl(event.currentTarget);
+            this.setState({isMenuOpen: event.currentTarget});
         };
 
         const handleClose = () => {
-            setAnchorEl(null);
+            this.setState({isMenuOpen: null});
         };
 
         return <div>
@@ -40,8 +43,8 @@ class NavigationBar extends Component {
                     <MenuIcon style={{margin: 0}}/>
                 </Grid>
             </IconButton>
-            <Menu id="menu-appbar" anchorEl={anchorEl} anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-                keepMounted transformOrigin={{vertical: 'top', horizontal: 'right'}} open={open}
+            <Menu id="menu-appbar" anchorEl={isMenuOpen} anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                keepMounted transformOrigin={{vertical: 'top', horizontal: 'right'}} open={Boolean(isMenuOpen)}
                 onClose={handleClose} variant="selectedMenu"
             >
                 <MenuItem component={RouterLink} onClick={handleClose} to="/goals">
@@ -61,22 +64,20 @@ class NavigationBar extends Component {
     };
 
     AccountButton = () => {
-        const [ anchorEl, setAnchorEl ] = React.useState(null);
-        let open = Boolean(anchorEl);
-
-        const handleClick = event => {
-            setAnchorEl(null);
-            event.preventDefault();
-            this.props.logout();
-        }
-
+        const {isAccountOpen} = this.state;
         const handleMenu = (event) => {
-            setAnchorEl(event.currentTarget);
+            this.setState({isAccountOpen: event.currentTarget});
         };
 
         const handleClose = () => {
-            setAnchorEl(null);
+            this.setState({isAccountOpen: null});
         };
+
+        const handleClick = event => {
+            this.setState({isAccountOpen: null});
+            event.preventDefault();
+            this.props.logout();
+        }
 
         return <div>
             <IconButton
@@ -90,7 +91,7 @@ class NavigationBar extends Component {
             </IconButton>
             <Menu
                 id="account-appbar"
-                anchorEl={anchorEl}
+                anchorEl={isAccountOpen}
                 anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
@@ -100,7 +101,7 @@ class NavigationBar extends Component {
                     vertical: 'top',
                     horizontal: 'right',
                 }}
-                open={open}
+                open={Boolean(isAccountOpen)}
                 onClose={handleClose}
                 variant="menu"
             >
