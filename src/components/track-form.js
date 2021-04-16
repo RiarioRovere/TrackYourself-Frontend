@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from "react-router";
-import {Button, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
 import {fetchSignalNames, saveSignals, saveSummary} from "../actions/signal-actions";
+import {Container, Col, Row, Form, Button} from "react-bootstrap";
 
 class TrackForm extends Component {
     constructor(props) {
@@ -28,6 +28,7 @@ class TrackForm extends Component {
         this.props.saveSignals(toSave);
         this.props.saveSummary(this.state.summary, this.state.date)
         this.props.history.push('/analyze')
+        console.log(JSON.stringify(toSave))
     }
 
     handleOnChangeSignal = (e) => {
@@ -50,59 +51,41 @@ class TrackForm extends Component {
     render() {
         const listItems = this.props.signalNames.map((name) => {
             return (
-                <FormControl key={name} style={{'paddingTop': '5px'}}>
-                    <TextField
-                        margin="dense"
-                        label={name}
-                        id={name}
-                        name={name}
-                        type={'number'}
-                        onChange={this.handleOnChangeSignal}
-                        variant="outlined"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </FormControl>
+                <Form.Control key={name} style={{'paddingTop': '5px', marginBottom: '10px'}}
+                              placeholder={name}
+                              id={name}
+                              name={name}
+                              type={'number'}
+                              onChange={this.handleOnChangeSignal}
+                >
+                </Form.Control>
             )
         })
 
         return (
-            <Grid container justify="center">
-                <Grid item xs={5} lg={2}>
-                    <FormGroup>
-                        <FormControl style={{'paddingTop': '10px'}}>
-                            <TextField
-                                id="date"
-                                label="date"
-                                type="date"
-                                name="date"
-                                onChange={this.handleOnChange}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                variant="outlined"
-                            />
-                        </FormControl>
-                        {listItems}
-                        <TextField
-                            margin="dense"
-                            id="summary"
-                            label="summary"
-                            type="text"
-                            name="summary"
-                            multiline={true}
-                            value={this.state.summary}
-                            onChange={this.handleOnChange}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                        <Button color="primary" onClick={this.handleSubmit}>submit</Button>
-                    </FormGroup>
-                </Grid>
-            </Grid>
+            <Container fluid>
+                <div align={'center'} style={{paddingTop: '20px'}}>
+                    <Col md={7} lg={4}>
+                        <Form>
+                            <Form.Group>
+                                <Form.Control id='date' name='date' type={'date'}
+                                              onChange={this.handleOnChange}
+                                              style={{marginBottom: '10px'}}
+                                />
+                                {listItems}
+                                <Form.Control as='textarea'
+                                              id="summary"
+                                              placeholder="summary"
+                                              name="summary"
+                                              value={this.state.summary}
+                                              onChange={this.handleOnChange}
+                                />
+                            </Form.Group>
+                            <Button color="primary" onClick={this.handleSubmit}>submit</Button>
+                        </Form>
+                    </Col>
+                </div>
+            </Container>
         )
     }
 }

@@ -1,11 +1,8 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux'
 import {addSignalName, deleteSignalName, fetchSignalNames} from '../../actions/signal-actions'
-import {Grid} from "@material-ui/core"
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import IconButton from "@material-ui/core/IconButton";
-import Input from "@material-ui/core/Input";
+import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import {BiTrash} from "react-icons/all";
 
 class SignalEditor extends Component {
     constructor(props) {
@@ -29,7 +26,8 @@ class SignalEditor extends Component {
         })
     }
 
-    handleAdd = () => {
+    handleAdd = (e) => {
+        e.preventDefault()
         this.props.addSignalName(this.state.newSignal);
         this.setState({
             newSignal: ''
@@ -39,27 +37,40 @@ class SignalEditor extends Component {
     render() {
         const signalNamesMapped = this.props.signalNames.map((name) => {
             return (
-                <Grid container key={name} alignItems="center">
-                    {/* TODO: Change layout to be cool */}
-                    <Grid item xs={4}>
-                        <p>{name}</p>
-                    </Grid>
-                    <IconButton name={name} onClick={() => this.handleRemove(name)}>
-                        <HighlightOffIcon/>
-                    </IconButton>
-                </Grid>
+                <li className={'list-group-item'}>
+                    <Row fluid>
+                        <Col xs={8}>
+                            <p>{name}</p>
+                        </Col>
+                        <Col>
+                            <div align={'right'}>
+                                <Button variant={'light'} name={name} onClick={() => this.handleRemove(name)}>
+                                    <BiTrash className={'btn-outline-danger'}/>
+                                </Button>
+                            </div>
+                        </Col>
+                    </Row>
+                </li>
             )
         })
         return (
-            <Grid container direction="column">
-                {signalNamesMapped}
-                <Grid container alignItems="center">
-                    <Input onChange={this.handleChange} value={this.state.newSignal}/>
-                    <IconButton onClick={this.handleAdd}>
-                        <AddCircleOutlineIcon/>
-                    </IconButton>
-                </Grid>
-            </Grid>
+            <Container fluid>
+                <h4 align={"center"}>Signals</h4>
+                <ul style={{paddingTop: '30px'}} className={'list-group'}>
+                    {signalNamesMapped}
+                </ul>
+                <Row>
+                    <Col xs={12}>
+                        <Form style={{paddingTop: '15px'}}>
+                            <Form.Group>
+                                <Form.Control id="newSignal" name="newSignal"
+                                              value={this.state.newSignal} onChange={this.handleChange} />
+                            </Form.Group>
+                            <Button variant="primary" type="submit" onClick={this.handleAdd}>save</Button>
+                        </Form>
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }

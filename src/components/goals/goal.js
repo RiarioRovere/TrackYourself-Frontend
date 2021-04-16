@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {Button, Grid, Typography} from "@material-ui/core";
 import {deleteGoal, fetchGoal, updateGoal} from "../../actions/goal-actions";
 import ReportList from "./report-list";
 import {withRouter} from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import {Container, Row, Col, Dropdown, Jumbotron} from "react-bootstrap";
+import {Typography} from "@material-ui/core";
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import './goals.css'
 
 class Goal extends Component {
     constructor(props) {
@@ -46,30 +49,40 @@ class Goal extends Component {
         const goal = this.props.goal;
         return (
             <div>
-                <Grid container justify="flex-start">
-                    <Grid item xs={12} md={5}>
-                        <Typography variant="h3"> {goal.title} </Typography>
-                        <Typography variant="body1">
+                <Container>
+                    <Row fluid>
+                    <Col xs={9}>
+                        <Jumbotron>
+                            <h4>{goal.title}</h4>
                             <pre style={{ fontFamily: 'inherit'}}>
                                 {goal.description}s
                             </pre>
-                        </Typography>
-                        <Grid container xs={15} justify={"flex-start"} md={5}>
-                            {this.state.isMyGoal &&
-                            <Button onClick={this.onDelete}>
-                                delete goal
-                            </Button>
-                            }
-                            {this.state.isMyGoal &&
-                                <FormControlLabel
-                                    control={<Switch checked={goal?.isPublic || false} onChange={this.handlePrivateChange} aria-label="visible switch"/>}
-                                    label={goal?.isPublic ? 'Public' : 'Private'}
-                                />
-                            }
-                        </Grid>
-                        <ReportList isMyGoal={this.state.isMyGoal} goalId={this.props.id}/>
-                    </Grid>
-                </Grid>
+                        </Jumbotron>
+                    </Col>
+                        <Col xs={3}>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                    menu
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    {this.state.isMyGoal &&
+                                    <Dropdown.Item variant={'danger'} onClick={this.onDelete}>delete</Dropdown.Item>
+                                    }
+                                    <Dropdown.Item>
+                                        {this.state.isMyGoal &&
+                                        <FormControlLabel
+                                            control={<Switch checked={goal?.isPublic || false} onChange={this.handlePrivateChange} aria-label="visible switch"/>}
+                                            label={goal?.isPublic ? 'Public' : 'Private'}
+                                        />
+                                        }
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Col>
+                    </Row>
+
+                    <ReportList isMyGoal={this.state.isMyGoal} goalId={this.props.id}/>
+                </Container>
             </div>
         )
     }

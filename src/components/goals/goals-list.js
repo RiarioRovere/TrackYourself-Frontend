@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {Button, Grid, Typography} from "@material-ui/core";
 import {connect} from "react-redux";
 import {fetchGoals} from "../../actions/goal-actions";
+import {Container, Row, Card, Nav} from "react-bootstrap";
+import {LinkContainer} from 'react-router-bootstrap'
+
 
 class GoalsList extends Component {
     componentDidMount() {
@@ -12,20 +14,24 @@ class GoalsList extends Component {
     render() {
         const listItems = this.props.goals.map(({title, id}) => {
             return (
-                <Button component={Link} key={title} to={`/goal/${id}`}>
-                    {title}
-                </Button>
+                <LinkContainer style={{ width: '20rem', margin: '10px' }} to={`/goal/${id}`}>
+                    <Card >
+                        <Card.Body>
+                            <Card.Title>{title}</Card.Title>
+                        </Card.Body>
+                    </Card>
+                </LinkContainer>
             );
         });
         return (
-            <div>
-                <Grid container justify="flex-start">
-                    <Grid item xs={12} lg={5}>
-                        <Typography variant="h4">Goals</Typography>
-                        {listItems}
-                    </Grid>
-                </Grid>
-            </div>
+            <Container>
+                <div align={'center'}>
+                    <h4>Goals</h4>
+                </div>
+                <Row>
+                    {listItems}
+                </Row>
+            </Container>
         )
     }
 }

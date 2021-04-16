@@ -11,13 +11,24 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Search from "./search";
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Grid from "@material-ui/core/Grid";
+import {Form, FormControl, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import {LinkContainer} from "react-router-bootstrap";
 
 
 class NavigationBar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isMenuOpen: null,
+            isAccountOpen: null
+        }
+    }
 
-    state = {
-        isMenuOpen: null,
-        isAccountOpen: null
+    handleLogout = (e) => {
+        e.preventDefault();
+        this.setState({isAccountOpen: null});
+        this.props.logout();
     }
 
     MenuButton = () => {
@@ -63,81 +74,45 @@ class NavigationBar extends Component {
         </div>
     };
 
-    AccountButton = () => {
-        const {isAccountOpen} = this.state;
-        const handleMenu = (event) => {
-            this.setState({isAccountOpen: event.currentTarget});
-        };
-
-        const handleClose = () => {
-            this.setState({isAccountOpen: null});
-        };
-
-        const handleClick = event => {
-            this.setState({isAccountOpen: null});
-            event.preventDefault();
-            this.props.logout();
-        }
-
-        return <div>
-            <IconButton
-                aria-label="account of current user"
-                aria-controls="account-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-            >
-                <AccountCircle />
-            </IconButton>
-            <Menu
-                id="account-appbar"
-                anchorEl={isAccountOpen}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-                open={Boolean(isAccountOpen)}
-                onClose={handleClose}
-                variant="menu"
-            >
-                {this.props.isLoggedIn &&
-                    <MenuItem component={RouterLink} onClick={handleClose} to="/profile">Profile</MenuItem>
-                }
-                {this.props.isLoggedIn &&
-                <MenuItem onClick={handleClick}>LogOut</MenuItem>
-                }
-                {this.props.isLoggedIn === false &&
-                    <MenuItem component={RouterLink} onClick={handleClose} to="/registration">
-                        Register
-                    </MenuItem>
-                }
-                {this.props.isLoggedIn === false &&
-                <MenuItem component={RouterLink} onClick={handleClose} to="/login">
-                    Login
-                </MenuItem>
-                }
-            </Menu>
-        </div>
-    };
-
     render() {
         return (
-            <AppBar position="relative">
-                <Toolbar>
-                    { this.props.isLoggedIn &&
-                    <this.MenuButton />
-                    }
-                    { this.props.isLoggedIn &&
-                    <Search />
-                    }
-                    <this.AccountButton />
-                </Toolbar>
-            </AppBar>
+            <Navbar bg="light" expand="xs">
+                <LinkContainer to={`/`}>
+                    <Navbar.Brand>TY</Navbar.Brand>
+                </LinkContainer>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                        <LinkContainer to={`/goals`}>
+                            <p>Goals</p>
+                        </LinkContainer>
+                        <LinkContainer to={`/analyze`}>
+                            <p>Stat</p>
+                        </LinkContainer>
+                        <LinkContainer to={`/signal`}>
+                            <p>Track!</p>
+                        </LinkContainer>
+                        <LinkContainer to={`/insights`}>
+                            <p>Insights</p>
+                        </LinkContainer>
+                        <LinkContainer to={`/profile`}>
+                            <p>Profile</p>
+                        </LinkContainer>
+                        <Button onClick={this.handleLogout}>logout</Button>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            // <AppBar position="relative">
+            //     <Toolbar>
+            //         { this.props.isLoggedIn &&
+            //         <this.MenuButton />
+            //         }
+            //         { this.props.isLoggedIn &&
+            //         <Search />
+            //         }
+            //         <this.AccountButton />
+            //     </Toolbar>
+            // </AppBar>
         );
     }
 }

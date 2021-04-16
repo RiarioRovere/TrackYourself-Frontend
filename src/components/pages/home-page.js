@@ -1,12 +1,10 @@
 import React, {Component} from "react";
+import GoalsPage from "./goals-page";
 
 class HomePage extends Component {
     render() {
         return (
-            <div>
-
-
-            </div>
+            <GoalsPage/>
         )
     }
 }

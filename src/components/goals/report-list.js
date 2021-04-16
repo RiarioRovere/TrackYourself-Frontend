@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Button, FormGroup, Grid, TextField, Typography} from "@material-ui/core";
+import {TextField, Typography} from "@material-ui/core";
 import {connect} from "react-redux";
 import {deleteReport, fetchReports, saveReport} from "../../actions/goal-actions";
-import IconButton from "@material-ui/core/IconButton";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import {Col, Row, Container, Button, Form} from "react-bootstrap";
+import {BiTrash} from "react-icons/all";
 
 class ReportList extends Component {
     constructor(props) {
@@ -37,46 +37,49 @@ class ReportList extends Component {
 
     render() {
         const listItems = this.props.reports?.map(({content, id}) => {
-            console.log(content)
             return (
-                <Grid item container key={content} alignItems="center" justify="center">
-                    <Grid item xs={10} spacing={0} alignItems={"center"}>
-                        <Typography variant="body1"
-                                    style={{ "wordWrap": "break-word", "white-space": "pre-wrap"}}>
-                            {content}
-                        </Typography>
-                    </Grid>
-                    {this.props.isMyGoal &&
-                        <IconButton size={"small"} name={content} onClick={() => this.handleRemove(id)}>
-                            <HighlightOffIcon/>
-                        </IconButton>
-                    }
-                </Grid>
+                <li className={'list-group-item'}>
+                    <Row>
+                        <Col xs={10}>
+                            <pre>
+                                {content}
+                            </pre>
+                        </Col>
+                        <Col>
+                            <div align={'right'}>
+                                {this.props.isMyGoal &&
+                                <Button variant={'light'} name={content} onClick={() => this.handleRemove(id)}>
+                                    <BiTrash className={'btn-outline-danger'}/>
+                                </Button>
+                                }
+                            </div>
+                        </Col>
+                    </Row>
+                </li>
+
             );
         });
         listItems.reverse()
         return (
-            <div>
-                <Grid container justify="flex-start">
-                    <Grid item xs={12} md={5}>
-                        <Typography variant="h4" align={"center"}>Reports</Typography>
-                        {this.props.isMyGoal &&
-                            <FormGroup>
-                                <TextField
-                                    margin="dense" id="content" label="new report" type="text" name="content" multiline={true}
-                                    value={this.state.content} onChange={this.handleChange}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }} variant="outlined" />
-                                <Button color="primary" onClick={this.handleSubmit}>save</Button>
-                            </FormGroup>
-                        }
-                        <Grid container direction={"column"} spacing={2}>
-                            {listItems}
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </div>
+            <Container fluid>
+                <h4 variant="h4" align={"center"}>Reports</h4>
+                <Row>
+                    {this.props.isMyGoal &&
+                    <Col xs={12}>
+                        <Form>
+                            <Form.Group>
+                                <Form.Control as="textarea" id="content" name="content"
+                                              value={this.state.content} onChange={this.handleChange} rows={3} />
+                            </Form.Group>
+                            <Button variant="primary" type="submit" onClick={this.handleSubmit}>save</Button>
+                        </Form>
+                    </Col>
+                    }
+                </Row>
+                <ul style={{paddingTop: '30px'}} className={'list-group'}>
+                    {listItems}
+                </ul>
+            </Container>
         )
     }
 }

@@ -1,17 +1,16 @@
 import React, {Component} from "react";
 import GoalsList from "../goals/goals-list";
-import {Link} from "react-router-dom";
-import {Button} from "@material-ui/core";
+import {LinkContainer} from "react-router-bootstrap";
+import {Button} from "react-bootstrap";
 
 class GoalsPage extends Component {
     render() {
-
         return (
             <div>
                 <GoalsList/>
-                <Button component={Link} to={`/new-goal`}>
-                    add goal
-                </Button>
+                <LinkContainer style={{marginLeft: '15px'}} to={`/new-goal`}>
+                    <Button>new goal</Button>
+                </LinkContainer>
             </div>
         )
     }

@@ -1,24 +1,32 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
-import {Button} from "@material-ui/core";
 import {updateSearch} from "../../actions/general-actions";
+import {Card, Container, Row} from "react-bootstrap";
+import {LinkContainer} from "react-router-bootstrap";
 
 class SearchPage extends Component {
     render() {
         const response = this.props.searchResponse.map((user) => {
             return (
-                <li>
-                    <Button component={Link} key={user.username} to={`/user/${user.username}`} onClick={ () => this.props.updateSearch('') }>
-                        {user.username}
-                    </Button>
-                </li>
+                <LinkContainer style={{ width: '10rem', margin: '10px' }}
+                               to={`/user/${user.username}`}
+                               onClick={ () => this.props.updateSearch('') }>
+                    <Card >
+                        <img src={process.env.PUBLIC_URL + '/anon.jpg'}
+                                  className="rounded-circle" width="155" />
+                        <Card.Body>
+                            <Card.Title>{user.username}</Card.Title>
+                        </Card.Body>
+                    </Card>
+                </LinkContainer>
             )
         })
         return (
-            <ul>
-                {response}
-            </ul>
+            <Container>
+                <Row>
+                    {response}
+                </Row>
+            </Container>
         )
     }
 }

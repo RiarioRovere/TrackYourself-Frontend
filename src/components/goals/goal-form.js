@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Button, FormGroup, Grid, TextField} from "@material-ui/core";
 import {connect} from "react-redux";
 import {addGoal} from "../../actions/goal-actions";
 import {withRouter} from "react-router";
+import {Col, Container, Form, Button} from "react-bootstrap";
 
 class GoalForm extends Component {
 
@@ -35,39 +35,32 @@ class GoalForm extends Component {
     render() {
         return (
             <div>
-                <Grid container alignItems="center">
-                    <FormGroup>
-                        <TextField
-                            margin="dense"
-                            id="title"
-                            label="title"
-                            type="text"
-                            name="title"
-                            multiline={true}
-                            value={this.state.title}
-                            onChange={this.handleChange}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                        <TextField
-                            margin="dense"
-                            id="description"
-                            label="description"
-                            type="text"
-                            name="description"
-                            multiline={true}
-                            value={this.state.description}
-                            onChange={this.handleChange}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                        <Button color="primary" onClick={this.handleSubmit}>submit</Button>
-                    </FormGroup>
-                </Grid>
+                <Container fluid>
+                    <div align={'center'} style={{marginTop: '10px'}}>
+                        <h4>New goal!</h4>
+                        <Col xs={9}>
+                            <Form>
+                                <Form.Group>
+                                    <Form.Control id="title"
+                                                  placeholder="title"
+                                                  name="title"
+                                                  value={this.state.title}
+                                                  onChange={this.handleChange}
+                                                  style={{marginBottom: '10px'}}
+                                    />
+                                    <Form.Control as='textarea'
+                                                  id="description"
+                                                  placeholder="description"
+                                                  name="description"
+                                                  value={this.state.description}
+                                                  onChange={this.handleChange}
+                                    />
+                                </Form.Group>
+                                <Button color="primary" type={'submit'} onClick={this.handleSubmit}>submit</Button>
+                            </Form>
+                        </Col>
+                    </div>
+                </Container>
             </div>
         )
     }
